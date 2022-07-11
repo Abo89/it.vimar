@@ -1,0 +1,296 @@
+{
+"ids": {
+    "modelId": "On_Off_Switch_v1.0",
+    "manufacturerName": "Vimar"
+  },
+  "endpoints": {
+    "endpointDescriptors": [
+      {
+        "endpointId": 10,
+        "applicationProfileId": 260,
+        "applicationDeviceId": 0,
+        "applicationDeviceVersion": 0,
+        "_reserved1": 0,
+        "inputClusters": [
+          0,
+          6,
+          7,
+          3,
+          5,
+          4
+        ],
+        "outputClusters": [
+          6,
+          3
+        ]
+      },
+      {
+        "endpointId": 242,
+        "applicationProfileId": 41440,
+        "applicationDeviceId": 97,
+        "applicationDeviceVersion": 0,
+        "_reserved1": 0,
+        "inputClusters": [],
+        "outputClusters": [
+          33
+        ]
+      }
+    ],
+    "endpoints": {
+      "10": {
+        "clusters": {
+          "basic": {
+            "attributes": [
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 0,
+                "name": "zclVersion",
+                "value": 2
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 1,
+                "name": "appVersion",
+                "value": 1
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 2,
+                "name": "stackVersion",
+                "value": 10
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 3,
+                "name": "hwVersion",
+                "value": 11
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 4,
+                "name": "manufacturerName",
+                "value": "Vimar"
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 5,
+                "name": "modelId",
+                "value": "On_Off_Switch_v1.0"
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 6,
+                "name": "dateCode",
+                "value": "20200501"
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 7,
+                "name": "powerSource",
+                "value": "mains"
+              }
+            ],
+            "commandsGenerated": [],
+            "commandsReceived": [
+              "factoryReset"
+            ]
+          },
+          "onOff": {
+            "attributes": [
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 0,
+                "name": "onOff",
+                "value": false
+              }
+            ],
+            "commandsGenerated": [],
+            "commandsReceived": [
+              "setOff",
+              "setOn",
+              "toggle"
+            ]
+          },
+          "onOffSwitch": {
+            "attributes": [
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 0
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 16
+              }
+            ],
+            "commandsGenerated": [],
+            "commandsReceived": []
+          },
+          "identify": {
+            "attributes": [
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 0
+              }
+            ],
+            "commandsGenerated": [
+              0
+            ],
+            "commandsReceived": [
+              0,
+              1,
+              64
+            ]
+          },
+          "scenes": {
+            "attributes": [
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 0
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 1
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 2
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 3
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 4
+              }
+            ],
+            "commandsGenerated": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              6
+            ],
+            "commandsReceived": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          },
+          "groups": {
+            "attributes": [
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 0,
+                "name": "nameSupport",
+                "value": {
+                  "type": "Buffer",
+                  "data": [
+                    0
+                  ]
+                }
+              }
+            ],
+            "commandsGenerated": [
+              "addGroup.response",
+              "viewGroup.response",
+              "getGroupMembership.response",
+              "removeGroup.response"
+            ],
+            "commandsReceived": [
+              "addGroup",
+              "viewGroup",
+              "getGroupMembership",
+              "removeGroup",
+              "removeAllGroups",
+              "addGroupIfIdentify"
+            ]
+          }
+        },
+        "bindings": {
+          "onOff": {
+            "attributes": [
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 0,
+                "name": "onOff",
+                "value": false
+              }
+            ],
+            "commandsGenerated": [],
+            "commandsReceived": [
+              "setOff",
+              "setOn",
+              "toggle"
+            ]
+          },
+          "identify": {
+            "attributes": [
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 0
+              }
+            ],
+            "commandsGenerated": [
+              0
+            ],
+            "commandsReceived": [
+              0,
+              1,
+              64
+            ]
+          }
+        }
+      },
+      "242": {
+        "clusters": {},
+        "bindings": {}
+      }
+    }
+  }
+}

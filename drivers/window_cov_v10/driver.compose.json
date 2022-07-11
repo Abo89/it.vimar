@@ -1,0 +1,61 @@
+{
+  "name": {
+    "en": "Window_Cov_v1.0"
+  },
+  "class": "blinds",
+  "_appSpecific":{
+    "brand": "Vimar",
+    "modelID": "Window_Cov_v1.0"
+  },
+  "capabilities": [
+    "windowcoverings_state",
+    "windowcoverings_set"
+  ],
+  "zigbee": {
+    "manufacturerName": "Vimar",
+    "productId": [
+      "Window_Cov_v1.0"
+    ],
+    "endpoints": {
+      "10": {
+        "clusters": [
+          0,
+          3,
+          4,
+          5,
+          258
+        ],
+        "bindings": []
+      }
+    },
+    "learnmode": {
+      "instruction": {
+        "en": "Please read the documentation to put devices in learn mode"
+      }
+    }
+  },
+  "pair": [
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "platforms": [
+    "local"
+  ],
+  "connectivity": [
+    "zigbee"
+  ],
+  "images": {
+    "xlarge": "{{driverAssetsPath}}/images/Vimar_14594_XLarge.jpgg",
+    "large": "{{driverAssetsPath}}/images/Vimar_14594_Large.jpg",
+    "small": "{{driverAssetsPath}}/images/Vimar_14594_Small.jpg"
+  }
+}

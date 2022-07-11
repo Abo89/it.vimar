@@ -1,0 +1,31 @@
+{
+  "id": "it.vimar",
+  "version": "1.0.2",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "Vimar",
+    "it": "Vimar"
+  },
+  "description": {
+    "en": "Vimar devices",
+    "it": "Dispositivi IoT Vimar"
+  },
+  "category": [
+    "tools"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/Logo_Vimar_Small.png",
+    "large": "/assets/images/Logo_Vimar_Large.png",
+    "xlarge": "/assets/images/Logo_Vimar_XLarge.png"
+  },
+  "author": {
+    "name": "Andrea Alberti",
+    "email": "alberti1989@gmail.com"
+  },
+  "brandColor": "#cac814"
+}
