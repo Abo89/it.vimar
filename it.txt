@@ -1,0 +1,3 @@
+Vimar IoT devices
+It works when vimar devices is on zigbee mode
+https://www.vimar.com/it/it/app-view-wireless-funzionamento-in-modalita-zigbee-con-hub-di-te-15680152.html

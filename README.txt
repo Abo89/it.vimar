@@ -1,1 +1,0 @@
-Vimar devices
