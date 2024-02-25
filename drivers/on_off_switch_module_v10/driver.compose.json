@@ -1,0 +1,60 @@
+{
+  "name": {
+    "en": "On_Off_Switch_Module_v1.0",
+    "it": "On_Off_Switch_Module_v1.0"
+  },
+  "class": "button",
+  "capabilities": [
+    "onoff"
+  ],
+  "zigbee": {
+    "manufacturerName": "Vimar",
+    "productId": [
+      "On_Off_Switch_Module_v1.0"
+    ],
+    "endpoints": {
+      "10": {
+        "clusters": [
+          0,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "bindings": [
+          6
+        ]
+      }
+    },
+    "learnmode": {
+      "instruction": {
+        "en": "Please read the documentation to put devices in learn mode"
+      }
+    }
+  },
+  "pair": [
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "connectivity": [
+    "zigbee"
+  ],
+  "platforms": [
+    "local"
+  ],
+  "images": {
+    "xlarge": "{{driverAssetsPath}}/images/Vimar_14592_XLarge.jpgg",
+    "large": "{{driverAssetsPath}}/images/Vimar_14592_Large.jpg",
+    "small": "{{driverAssetsPath}}/images/Vimar_14592_Small.jpg"
+  }
+}

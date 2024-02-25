@@ -9,7 +9,7 @@
     "@types/node": "^18.0.0"
   },
   "dependencies": {
-    "homey-zigbeedriver": "^1.6.11",
+    "homey-zigbeedriver": "^1.6.12",
     "zigbee-clusters": "^1.5.1"
   }
 }
