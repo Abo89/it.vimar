@@ -4,5 +4,8 @@
   },
   "1.0.2": {
     "en": "add support to windows_cov_1.0"
+  },
+  "1.1.0": {
+    "en": "Add On_Off_Switch_Module_v1.0"
   }
 }
