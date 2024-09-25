@@ -3,7 +3,7 @@
     "en": "On_Off_Switch_Module_v1.0",
     "it": "On_Off_Switch_Module_v1.0"
   },
-  "class": "button",
+  "class": "light",
   "capabilities": [
     "onoff"
   ],
