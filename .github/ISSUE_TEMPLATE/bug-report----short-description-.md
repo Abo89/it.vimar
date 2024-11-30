@@ -1,6 +1,7 @@
 ---
 name: Bug report - [Short description]
-about: Create a report to help us improve
+about: Is something not as it should be? If so you can create a bug report and help
+  enhance the app.
 title: ''
 labels: ''
 assignees: ''

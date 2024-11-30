@@ -1,6 +1,6 @@
 ---
 name: Device Request - [Device name] - [manufacturerName] / [modelId]
-about: Suggest an idea for this project
+about: If your device is not supported by the app you can request it to be added here.
 title: ''
 labels: ''
 assignees: ''

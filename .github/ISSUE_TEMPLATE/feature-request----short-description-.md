@@ -1,6 +1,7 @@
 ---
 name: Feature Request - [Short description]
-about: Suggest an idea for this project
+about: Do you have an idea or suggestion? Something you miss or like to see added?
+  Create a feature request!
 title: ''
 labels: ''
 assignees: ''
