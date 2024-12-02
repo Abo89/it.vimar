@@ -1,12 +1,52 @@
 {
   "name": {
-    "en": "Mains_Power_Outlet_v1.0"
+    "en": "Mains_Power_Outlet_v1.0",
+    "it": "Mains_Power_Outlet_v1.0"
   },
   "class": "button",
   "capabilities": [
-    "button",
+    "onoff",
     "measure_current",
     "measure_power"
+  ],
+  "zigbee": {
+    "manufacturerName": "Vimar",
+    "productId": [
+      "Mains_Power_Outlet_v1.0"
+    ],
+    "endpoints": {
+      "10": {
+        "clusters": [
+          0,
+          3,
+          6,
+          2820,
+          5,
+          4
+        ],
+        "bindings": [
+          6
+        ]
+      }
+    },
+    "learnmode": {
+      "instruction": {
+        "en": "Please read the documentation to put devices in learn mode"
+      }
+    }
+  },
+  "pair": [
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
   ],
   "platforms": [
     "local"
@@ -15,8 +55,8 @@
     "zigbee"
   ],
   "images": {
-    "small": "{{driverAssetsPath}}/images/small.png",
-    "large": "{{driverAssetsPath}}/images/large.png",
-    "xlarge": "{{driverAssetsPath}}/images/xlarge.png"
+    "xlarge": "{{driverAssetsPath}}/images/Vimar_14592_XLarge.jpgg",
+    "large": "{{driverAssetsPath}}/images/Vimar_14592_Large.jpg",
+    "small": "{{driverAssetsPath}}/images/Vimar_14592_Small.jpg"
   }
 }
