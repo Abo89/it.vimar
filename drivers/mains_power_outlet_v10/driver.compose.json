@@ -1,0 +1,22 @@
+{
+  "name": {
+    "en": "Mains_Power_Outlet_v1.0"
+  },
+  "class": "button",
+  "capabilities": [
+    "button",
+    "measure_current",
+    "measure_power"
+  ],
+  "platforms": [
+    "local"
+  ],
+  "connectivity": [
+    "zigbee"
+  ],
+  "images": {
+    "small": "{{driverAssetsPath}}/images/small.png",
+    "large": "{{driverAssetsPath}}/images/large.png",
+    "xlarge": "{{driverAssetsPath}}/images/xlarge.png"
+  }
+}
