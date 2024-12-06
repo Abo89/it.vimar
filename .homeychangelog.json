@@ -16,5 +16,8 @@
   },
   "1.1.3": {
     "en": "new device Mains_Power_Outlet_v1.0"
+  },
+  "1.1.4": {
+    "en": "bug fix Mains_Power_Outlet_v1.0"
   }
 }
