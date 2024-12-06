@@ -6,7 +6,6 @@
   "class": "button",
   "capabilities": [
     "onoff",
-    "measure_current",
     "measure_power"
   ],
   "zigbee": {

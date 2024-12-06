@@ -1,27 +1,33 @@
 'use strict';
 
-const { ZigBeeDevice } = require('homey-zigbeedriver');
-const { CLUSTER} = require('zigbee-clusters');
+const { Driver } = require('homey');
 
-class Mains_Power_Outlet_v1_0 extends ZigBeeDevice {
+class MyDriver extends Driver {
 
-  async onNodeInit({ zclNode }) {
-    //this.enableDebug(); // only for debugging purposes
-    //this.printNode(); // only for debugging purposes
-    this.registerCapability('onoff', CLUSTER.ON_OFF);
-        
-    this.registerCapability('measure_power', CLUSTER.ELECTRICAL_MEASUREMENT, {        
-        reportParser(value) {            
-            if (value < 0) return null;
-            return value;            
-        },
-        getOpts: {
-          getOnStart: true,
-          pollInterval: 10000
-        }
-    });
-  }  
+  /**
+   * onInit is called when the driver is initialized.
+   */
+  async onInit() {
+    this.log('MyDriver has been initialized');
+  }
 
-};
+  /**
+   * onPairListDevices is called when a user is adding a device
+   * and the 'list_devices' view is called.
+   * This should return an array with the data of devices that are available for pairing.
+   */
+  async onPairListDevices() {
+    return [
+    //   Example device data, note that `store` is optional
+       {
+         name: 'Vimar Mains Power Outlet v1.0',
+         data: {
+           id: 'Mains_Power_Outlet_v1.0',
+         },
+       },
+    ];
+  }
 
-module.exports = Mains_Power_Outlet_v1_0;
+}
+
+module.exports = MyDriver;
