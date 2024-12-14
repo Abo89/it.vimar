@@ -19,5 +19,8 @@
   },
   "1.1.4": {
     "en": "bug fix Mains_Power_Outlet_v1.0"
+  },
+  "1.1.5": {
+    "en": "report windows covering position"
   }
 }
