@@ -110,8 +110,8 @@ class curtain_module extends ZigBeeDevice {
           if (position > 0 || position < 100) {
             position = 1 - position
           }
-          if (position == 1) position = 0;
-          if (position == 0) position = 1;
+          //if (position == 1) position = 0;
+          //if (position == 0) position = 1;
           this.log(position);
           await this.setCapabilityValue('windowcoverings_set', position);
           return null;
