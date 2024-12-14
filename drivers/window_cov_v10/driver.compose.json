@@ -25,7 +25,9 @@
           5,
           258
         ],
-        "bindings": []
+        "bindings": [
+          258
+        ]
       }
     },
     "learnmode": {
