@@ -10,7 +10,7 @@
   "zigbee": {
     "manufacturerName": "Vimar",
     "productId": [
-      "Mains_Power_Outlet_v1.0"
+      "DimmerSwitch_v1.0"
     ],
     "endpoints": {
       "10": {
@@ -18,7 +18,7 @@
           0,
           3,
           6,
-          2820,
+          8,
           5,
           4
         ],
