@@ -25,5 +25,8 @@
   },
   "1.1.6": {
     "en": "bug fix"
+  },
+  "1.1.7": {
+    "en": "new driver DimmerSwitch_v1.0"
   }
 }
