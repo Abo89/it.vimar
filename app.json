@@ -32,6 +32,28 @@
   "drivers": [
     {
       "name": {
+        "en": "DimmerSwitch_v1.0"
+      },
+      "class": "light",
+      "capabilities": [
+        "dim",
+        "onoff"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "zigbee"
+      ],
+      "images": {
+        "small": "/drivers/dimmerswitch_v10/assets/images/small.png",
+        "large": "/drivers/dimmerswitch_v10/assets/images/large.png",
+        "xlarge": "/drivers/dimmerswitch_v10/assets/images/xlarge.png"
+      },
+      "id": "dimmerswitch_v10"
+    },
+    {
+      "name": {
         "en": "Mains_Power_Outlet_v1.0",
         "it": "Mains_Power_Outlet_v1.0"
       },
