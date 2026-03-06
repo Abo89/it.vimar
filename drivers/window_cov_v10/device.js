@@ -1,7 +1,7 @@
 "use strict";
 
 const { ZigBeeDevice } = require("homey-zigbeedriver");
-const { Cluster, debug, CLUSTER } = require("zigbee-clusters");
+const { Cluster, CLUSTER } = require("zigbee-clusters");
 const TuyaWindowCoveringCluster = require("../../lib/TuyaWindowCoveringCluster");
 const { mapValueRange } = require('../../lib/util');
 
@@ -10,119 +10,133 @@ Cluster.addCluster(TuyaWindowCoveringCluster);
 const UP_OPEN = 'upOpen';
 const DOWN_CLOSE = 'downClose';
 const REPORT_DEBOUNCER = 5000;
+// How often (ms) to poll the device for its current position.
+// Polling is used as a fallback because some devices do not reliably send
+// attribute reports for currentPositionLiftPercentage on their own.
+const POSITION_POLL_INTERVAL = 5000;
 
 class curtain_module extends ZigBeeDevice {
 
-    invertPercentageLiftValue = true;
+    // Set to true when the device reports 0% as fully open (i.e. inverted scale).
+    get invertPercentageLiftValue() {
+        return this.getSetting('invert_percentage') ?? true;
+    }
 
     constructor(...args) {
         super(...args);
         this._reportPercentageDebounce = null;
         this._reportDebounceEnabled = false;
+        this._positionPollInterval = null;
     }
 
     async onNodeInit({ zclNode }) {
         await super.onNodeInit({ zclNode });
         this.printNode();
 
-        // code borrowed from here most recent version of zigbee driver to handle lift percentage + invert correctly
-        // remove once the package was updated
+        // Handles lift percentage with optional inversion.
+        // Based on the most recent version of zigbee-driver's windowCovering capability handler:
         // https://github.com/athombv/node-homey-zigbeedriver/blob/master/lib/system/capabilities/windowcoverings_set/windowCovering.js
+        // This can be removed once the package is updated.
         this.registerCapability(
             "windowcoverings_set",
             CLUSTER.WINDOW_COVERING,
             {
                 setParser: async (value) => {
-                    // Refresh timer or set new timer to prevent reports from updating the dim slider directly
-                    // when set command from Homey
+                    // Start or refresh the debounce timer so that incoming attribute reports
+                    // do not overwrite the capability value while a set command is in flight.
                     if (this._reportPercentageDebounce) {
-                      this._reportPercentageDebounce.refresh();
+                        this._reportPercentageDebounce.refresh();
                     } else {
-                      this._reportPercentageDebounce = this.homey.setTimeout(() => {
-                        this._reportDebounceEnabled = false;
-                        this._reportPercentageDebounce = null;
-                      }, REPORT_DEBOUNCER);
+                        this._reportPercentageDebounce = this.homey.setTimeout(() => {
+                            this._reportDebounceEnabled = false;
+                            this._reportPercentageDebounce = null;
+                        }, REPORT_DEBOUNCER);
                     }
-
-                    // Used to check if reports are generated based on set command from Homey
                     this._reportDebounceEnabled = true;
 
-                    // Override goToLiftPercentage to enforce blind to open/close completely
+                    // At the extremes (0 / 1) send a hard open/close command instead of
+                    // goToLiftPercentage so the blind travels to its end-stop reliably.
                     if (value === 0 || value === 1) {
-                      this.debug(`set → \`windowcoverings_set\`: ${value} → setParser → ${value === 1 ? UP_OPEN : DOWN_CLOSE}`);
-                      const { endpoint } = this._getClusterCapabilityConfiguration('windowcoverings_set', CLUSTER.WINDOW_COVERING);
-                      const windowCoveringEndpoint = endpoint ?? this.getClusterEndpoint(CLUSTER.WINDOW_COVERING);
-                      if (windowCoveringEndpoint === null) throw new Error('missing_window_covering_cluster');
+                        this.debug(`set → \`windowcoverings_set\`: ${value} → setParser → ${value === 1 ? UP_OPEN : DOWN_CLOSE}`);
+                        const { endpoint } = this._getClusterCapabilityConfiguration('windowcoverings_set', CLUSTER.WINDOW_COVERING);
+                        const windowCoveringEndpoint = endpoint ?? this.getClusterEndpoint(CLUSTER.WINDOW_COVERING);
+                        if (windowCoveringEndpoint === null) throw new Error('missing_window_covering_cluster');
 
-                      const windowCoveringCommand = value === 1 ? UP_OPEN : DOWN_CLOSE;
-                      await this.zclNode.endpoints[windowCoveringEndpoint].clusters
-                        .windowCovering[windowCoveringCommand]();
+                        const windowCoveringCommand = value === 1 ? UP_OPEN : DOWN_CLOSE;
+                        await this.zclNode.endpoints[windowCoveringEndpoint].clusters
+                            .windowCovering[windowCoveringCommand]();
 
-                      await this.setCapabilityValue('windowcoverings_set', value);
-                      return null;
+                        await this.setCapabilityValue('windowcoverings_set', value);
+                        return null;
                     }
 
                     const mappedValue = mapValueRange(
-                      0, 1, 0, 100, this.invertPercentageLiftValue ? 1 - value : value,
+                        0, 1, 0, 100, this.invertPercentageLiftValue ? 1 - value : value,
                     );
-                    const gotToLiftPercentageCommand = {
-                      // Round, otherwise might not be accepted by device
-                      percentageLiftValue: Math.round(mappedValue),
+                    const goToLiftPercentageCommand = {
+                        // Round to nearest integer — some devices reject fractional values.
+                        percentageLiftValue: Math.round(mappedValue),
                     };
-                    this.debug(`set → \`windowcoverings_set\`: ${value} → setParser → goToLiftPercentage`, gotToLiftPercentageCommand);
-                    // Send goToLiftPercentage command
-                    return gotToLiftPercentageCommand;
+                    this.debug(`set → \`windowcoverings_set\`: ${value} → setParser → goToLiftPercentage`, goToLiftPercentageCommand);
+                    return goToLiftPercentageCommand;
                 },
                 reportParser: (value) => {
-                    // Validate input
                     if (value < 0 || value > 100) return null;
 
-                    // Parse input value
                     const parsedValue = mapValueRange(
-                      0, 100, 0, 1, this.invertPercentageLiftValue ? 100 - value : value,
+                        0, 100, 0, 1, this.invertPercentageLiftValue ? 100 - value : value,
                     );
 
-                    // Refresh timer if needed
                     if (this._reportPercentageDebounce) {
-                      this._reportPercentageDebounce.refresh();
+                        this._reportPercentageDebounce.refresh();
                     }
 
-                    // If reports are not generated by set command from Homey update directly
+                    // Only forward the report when it was not triggered by a Homey set command.
                     if (!this._reportDebounceEnabled) return parsedValue;
 
-                    // Return value
                     return null;
                 },
             }
         );
-        setInterval(async () => {
-          const windowCoveringEndpoint = this.getClusterEndpoint(CLUSTER.WINDOW_COVERING);
-          if (windowCoveringEndpoint === null) throw new Error('missing_window_covering_cluster');
-          const value = await this.zclNode.endpoints[windowCoveringEndpoint].clusters.windowCovering
-          .readAttributes("currentPositionLiftPercentage")
-          .catch((err) => {
-            this.error("Error when reading settings from device", err);
-            return {}; // Return an empty object in case of an error
-          });
-          //this.log(value.currentPositionLiftPercentage)
-          var position = value.currentPositionLiftPercentage/100;
-          //this.log(position);
-          if (position > 0 || position < 100) {
-            position = 1 - position
-          }
-          //if (position == 1) position = 0;
-          //if (position == 0) position = 1;
-          this.log(position);
-          await this.setCapabilityValue('windowcoverings_set', position);
-          return null;
-        }, 5000);
+
+        this._startPositionPolling();
         await this._configureStateCapability(this.getSetting("has_state"));
     }
 
-    // When upgrading to node-zigbee-clusters v.2.0.0 this must be adressed:
-    // v2.0.0
-    // Changed Cluster.readAttributes signature, attributes must now be specified as an array of strings.
-    // zclNode.endpoints[1].clusters.windowCovering.readAttributes(['motorReversal', 'ANY OTHER IF NEEDED']);
+    // Polls the device every POSITION_POLL_INTERVAL ms as a fallback for devices that
+    // do not reliably push currentPositionLiftPercentage attribute reports.
+    _startPositionPolling() {
+        this._positionPollInterval = setInterval(async () => {
+            const windowCoveringEndpoint = this.getClusterEndpoint(CLUSTER.WINDOW_COVERING);
+            if (windowCoveringEndpoint === null) {
+                this.error('_startPositionPolling: missing_window_covering_cluster');
+                return;
+            }
+
+            const attributes = await this.zclNode.endpoints[windowCoveringEndpoint].clusters.windowCovering
+                .readAttributes("currentPositionLiftPercentage")
+                .catch((err) => {
+                    this.error("Error reading currentPositionLiftPercentage from device", err);
+                    return {};
+                });
+
+            if (attributes.currentPositionLiftPercentage == null) return;
+
+            // Convert 0–100 device value to the 0–1 Homey capability range, respecting inversion.
+            const raw = attributes.currentPositionLiftPercentage / 100;
+            const position = this.invertPercentageLiftValue ? 1 - raw : raw;
+            this.debug(`_startPositionPolling: raw=${raw} position=${position}`);
+
+            // Skip update while a set command debounce is active to avoid fighting with the UI.
+            if (!this._reportDebounceEnabled) {
+                await this.setCapabilityValue('windowcoverings_set', position);
+            }
+        }, POSITION_POLL_INTERVAL);
+    }
+
+    // When upgrading to node-zigbee-clusters v2.0.0 this must be addressed:
+    // readAttributes signature changed — attributes must now be passed as an array of strings:
+    // zclNode.endpoints[1].clusters.windowCovering.readAttributes(['currentPositionLiftPercentage']);
 
     async onSettings({ oldSettings, newSettings, changedKeys }) {
         try {
@@ -136,11 +150,20 @@ class curtain_module extends ZigBeeDevice {
 
     onDeleted() {
         this.log("Curtain Module removed");
+        this._clearPositionPolling();
     }
 
     onUninit() {
         if (this._reportPercentageDebounce) {
-          this.homey.clearTimeout(this._reportPercentageDebounce);
+            this.homey.clearTimeout(this._reportPercentageDebounce);
+        }
+        this._clearPositionPolling();
+    }
+
+    _clearPositionPolling() {
+        if (this._positionPollInterval) {
+            clearInterval(this._positionPollInterval);
+            this._positionPollInterval = null;
         }
     }
 
@@ -159,13 +182,13 @@ class curtain_module extends ZigBeeDevice {
                         Open: "up",
                         Stop: "idle",
                         Close: "down",
-                    }[val];
+                    }[val] ?? null;
                 },
                 reportOpts: {
                     configureAttributeReporting: {
-                        minInterval: 60, // Minimum interval (1 minute)
-                        maxInterval: 21600, // Maximum interval (6 hours)
-                        minChange: 1, // Report changes greater than 1%
+                        minInterval: 60,    // 1 minute
+                        maxInterval: 21600, // 6 hours
+                        minChange: 1,
                     },
                 },
             });
@@ -173,7 +196,7 @@ class curtain_module extends ZigBeeDevice {
             await this.removeCapability(key);
         }
     }
-    
+
 }
 
 module.exports = curtain_module;
