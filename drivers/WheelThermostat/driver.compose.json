@@ -1,0 +1,37 @@
+{
+  "name": {
+    "en": "Vimar Wheel Thermostat (02973.B)",
+    "it": "Termostato a Rotella Vimar (02973.B)"
+  },
+  "class": "thermostat",
+  "capabilities": [
+    "measure_temperature",
+    "target_temperature",
+    "thermostat_mode"
+  ],
+  "capabilitiesOptions": {
+    "target_temperature": {
+      "min": 5,
+      "max": 39,
+      "step": 0.5
+    }
+  },
+  "images": {
+    "small": "/drivers/WheelThermostat/assets/images/small.png",
+    "large": "/drivers/WheelThermostat/assets/images/large.png"
+  },
+  "zigbee": {
+    "manufacturerName": ["Vimar"],
+    "productId": ["WheelThermostat_v1.0"],
+    "deviceId": 769,
+    "profileId": 260,
+    "endpoint": 10,
+    "clusters": [0, 3, 513],
+    "learnmode": {
+      "instruction": {
+        "en": "Press and hold the wheel button for 5 seconds until the LED blinks rapidly to enter pairing mode.",
+        "it": "Tieni premuto il pulsante rotella per 5 secondi finché il LED lampeggia rapidamente per entrare in modalità di abbinamento."
+      }
+    }
+  }
+}
