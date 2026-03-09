@@ -1,1 +1,23 @@
-{}
+{
+  "_comment": "── ADD these keys to your existing locales/en.json ──────────────────────",
+
+  "drivers": {
+    "WheelThermostat": {
+      "pair": {
+        "start": {
+          "title": "Add Vimar Wheel Thermostat",
+          "body": "Make sure your Vimar 02973.B thermostat is powered and within range of your Homey."
+        },
+        "searching": {
+          "title": "Searching...",
+          "body": "Press and hold the wheel button for 5 seconds until the LED blinks rapidly."
+        },
+        "found": {
+          "title": "Found!",
+          "body": "Your Vimar Wheel Thermostat has been found. Give it a name."
+        }
+      }
+    }
+  }
+}
+

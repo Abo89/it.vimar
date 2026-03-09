@@ -1,0 +1,23 @@
+{
+  "_comment": "── AGGIUNGI queste chiavi al tuo locales/it.json esistente ──────────────",
+
+  "drivers": {
+    "WheelThermostat": {
+      "pair": {
+        "start": {
+          "title": "Aggiungi Termostato a Rotella Vimar",
+          "body": "Assicurati che il termostato Vimar 02973.B sia alimentato e nel raggio di Homey."
+        },
+        "searching": {
+          "title": "Ricerca in corso...",
+          "body": "Tieni premuto il pulsante rotella per 5 secondi finché il LED lampeggia rapidamente."
+        },
+        "found": {
+          "title": "Trovato!",
+          "body": "Il tuo Termostato a Rotella Vimar è stato trovato. Dagli un nome."
+        }
+      }
+    }
+  }
+}
+
