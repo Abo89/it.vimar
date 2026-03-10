@@ -8,8 +8,6 @@ const TEMP_FACTOR = 0.01;
 
 /**
  * Maps Zigbee thermostat systemMode values → Homey thermostat_mode capability values.
- * The Vimar WheelThermostat is a heating-only device
- * (controlSequenceOfOperation = "heating"), but we map all possible values.
  */
 const ZIGBEE_MODE_TO_HOMEY = {
   off:                  'off',
@@ -30,24 +28,6 @@ const HOMEY_MODE_TO_ZIGBEE = {
   auto: 'auto',
 };
 
-/**
- * Vimar WheelThermostat_v1.0
- *
- * Zigbee interview data
- *  - modelId:           WheelThermostat_v1.0
- *  - manufacturerName:  Vimar
- *  - endpoint 10        inputClusters: [0 basic, 3 identify, 513 thermostat]
- *  - powerSource:       mains (always on / receiveWhenIdle = true)
- *
- * Thermostat cluster attributes used:
- *  - localTemperature          (0x0000) read-only   → measure_temperature
- *  - occupiedHeatingSetpoint   (0x0012) read/write  → target_temperature
- *  - systemMode                (0x001C) read/write  → thermostat_mode
- *
- * Setpoint limits from device descriptor:
- *  - minHeatSetpointLimit: 500  (5.00 °C)
- *  - maxHeatSetpointLimit: 3900 (39.00 °C)
- */
 class WheelThermostatDevice extends ZigBeeDevice {
 
   async onNodeInit({ zclNode }) {
@@ -59,7 +39,7 @@ class WheelThermostatDevice extends ZigBeeDevice {
       get:        'localTemperature',
       getOpts: {
         getOnStart: true,
-        pollInterval: this.minReportInterval || 300000, // fallback 5 min
+        pollInterval: this.minReportInterval || 300000,
       },
       report:     'localTemperature',
       reportParser: value => {
@@ -69,8 +49,8 @@ class WheelThermostatDevice extends ZigBeeDevice {
       },
       reportOpts: {
         configureAttributeReporting: {
-          minInterval:  30,   // 30 seconds
-          maxInterval:  600,  // 10 minutes
+          minInterval:  30,
+          maxInterval:  600,
           minChange:    10,   // 0.10 °C
         },
       },
@@ -96,10 +76,11 @@ class WheelThermostatDevice extends ZigBeeDevice {
         },
       },
       set:       'occupiedHeatingSetpoint',
+      // ✅ FIX: restituire il valore grezzo, NON un oggetto { attributeName: value }
       setParser: value => {
         const raw = Math.round(value / TEMP_FACTOR);
         this.log(`[target_temperature] set ${value} °C → ${raw}`);
-        return { occupiedHeatingSetpoint: raw };
+        return raw;
       },
     });
 
@@ -123,10 +104,11 @@ class WheelThermostatDevice extends ZigBeeDevice {
         },
       },
       set:       'systemMode',
+      // ✅ FIX: restituire la stringa del modo, NON un oggetto { systemMode }
       setParser: value => {
         const systemMode = HOMEY_MODE_TO_ZIGBEE[value] ?? 'off';
         this.log(`[thermostat_mode] set "${value}" → systemMode "${systemMode}"`);
-        return { systemMode };
+        return systemMode;
       },
     });
   }
@@ -135,7 +117,7 @@ class WheelThermostatDevice extends ZigBeeDevice {
   async onEndDeviceAnnounce() {
     this.log('[WheelThermostatDevice] device announced – refreshing attributes');
     try {
-      await this.onNodeInit({ zclNode: this.zclNode });
+      await this.refreshCapabilityValues();
     } catch (err) {
       this.error('[WheelThermostatDevice] refresh after announce failed:', err);
     }
@@ -144,4 +126,3 @@ class WheelThermostatDevice extends ZigBeeDevice {
 }
 
 module.exports = WheelThermostatDevice;
-
