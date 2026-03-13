@@ -9,9 +9,11 @@ const TEMP_FACTOR = 0.01;
 // Endpoint del termostato Vimar WheelThermostat
 const THERMOSTAT_ENDPOINT = 10;
 
+// Poll interval come fallback se i report Zigbee non arrivano (ms)
+const POLL_INTERVAL = 60000; // 60 secondi
+
 /**
  * Maps Zigbee thermostat systemMode values → Homey thermostat_mode capability values.
- * Questo dispositivo supporta solo heating (controlSequenceOfOperation = "heating")
  */
 const ZIGBEE_MODE_TO_HOMEY = {
   off:                 'off',
@@ -40,13 +42,22 @@ class WheelThermostatDevice extends ZigBeeDevice {
 
     const thermostatCluster = zclNode.endpoints[THERMOSTAT_ENDPOINT].clusters.thermostat;
 
+    // ── BIND esplicito del cluster thermostat ─────────────────────────────
+    // Necessario perché i report Zigbee arrivino all'hub
+    try {
+      await zclNode.endpoints[THERMOSTAT_ENDPOINT].clusters.thermostat.bind();
+      this.log('[WheelThermostatDevice] thermostat cluster bound OK');
+    } catch (err) {
+      this.error('[WheelThermostatDevice] thermostat bind failed (non-fatal):', err.message);
+    }
+
     // ── measure_temperature (sola lettura) ────────────────────────────────
     this.registerCapability('measure_temperature', CLUSTER.THERMOSTAT, {
       endpoint: THERMOSTAT_ENDPOINT,
       get:      'localTemperature',
       getOpts: {
         getOnStart:   true,
-        pollInterval: this.minReportInterval || 300000,
+        pollInterval: POLL_INTERVAL,   // FIX: fallback polling
       },
       report:       'localTemperature',
       reportParser: value => {
@@ -57,18 +68,19 @@ class WheelThermostatDevice extends ZigBeeDevice {
       reportOpts: {
         configureAttributeReporting: {
           minInterval: 30,
-          maxInterval: 600,
-          minChange:   10,   // 0.10 °C
+          maxInterval: 300,
+          minChange:   5,    // FIX: era 10 (=0.10 °C), ora 5 (=0.05 °C) più reattivo
         },
       },
     });
 
-    // ── target_temperature: lettura ───────────────────────────────────────
+    // ── target_temperature: lettura + polling ─────────────────────────────
     this.registerCapability('target_temperature', CLUSTER.THERMOSTAT, {
       endpoint: THERMOSTAT_ENDPOINT,
       get:      'occupiedHeatingSetpoint',
       getOpts: {
-        getOnStart: true,
+        getOnStart:   true,
+        pollInterval: POLL_INTERVAL,   // FIX: aggiunto polling fallback
       },
       report:       'occupiedHeatingSetpoint',
       reportParser: value => {
@@ -78,14 +90,14 @@ class WheelThermostatDevice extends ZigBeeDevice {
       },
       reportOpts: {
         configureAttributeReporting: {
-          minInterval: 10,
-          maxInterval: 600,
-          minChange:   50,   // 0.50 °C
+          minInterval: 5,
+          maxInterval: 300,
+          minChange:   25,   // FIX: era 50 (=0.50 °C), ora 25 (=0.25 °C)
         },
       },
     });
 
-    // ── target_temperature: scrittura (FIX – writeAttributes diretto) ─────
+    // ── target_temperature: scrittura ─────────────────────────────────────
     this.registerCapabilityListener('target_temperature', async (value) => {
       const raw = Math.round(value / TEMP_FACTOR);
       this.log(`[target_temperature] set ${value} °C → raw ${raw}`);
@@ -98,12 +110,13 @@ class WheelThermostatDevice extends ZigBeeDevice {
       }
     });
 
-    // ── thermostat_mode: lettura ──────────────────────────────────────────
+    // ── thermostat_mode: lettura + polling ────────────────────────────────
     this.registerCapability('thermostat_mode', CLUSTER.THERMOSTAT, {
       endpoint: THERMOSTAT_ENDPOINT,
       get:      'systemMode',
       getOpts: {
-        getOnStart: true,
+        getOnStart:   true,
+        pollInterval: POLL_INTERVAL,   // FIX: aggiunto polling fallback
       },
       report:       'systemMode',
       reportParser: value => {
@@ -113,14 +126,14 @@ class WheelThermostatDevice extends ZigBeeDevice {
       },
       reportOpts: {
         configureAttributeReporting: {
-          minInterval: 10,
-          maxInterval: 600,
-          // minChange omesso: systemMode è un enum, non numerico
+          minInterval: 5,
+          maxInterval: 300,
+          // minChange omesso: systemMode è un enum
         },
       },
     });
 
-    // ── thermostat_mode: scrittura (FIX – writeAttributes diretto) ────────
+    // ── thermostat_mode: scrittura ────────────────────────────────────────
     this.registerCapabilityListener('thermostat_mode', async (value) => {
       const systemMode = HOMEY_MODE_TO_ZIGBEE[value] ?? 'off';
       this.log(`[thermostat_mode] set "${value}" → systemMode "${systemMode}"`);
@@ -132,6 +145,37 @@ class WheelThermostatDevice extends ZigBeeDevice {
         throw err;
       }
     });
+
+    // ── Configura attribute reporting manualmente come conferma ───────────
+    // Alcuni device ignorano la configurazione via registerCapability
+    this._configureReporting(thermostatCluster).catch(err =>
+      this.error('[WheelThermostatDevice] manual configureReporting failed:', err.message),
+    );
+  }
+
+  /**
+   * Configura attribute reporting direttamente sul cluster.
+   * Fallback nel caso in cui registerCapability non lo faccia correttamente.
+   */
+  async _configureReporting(thermostatCluster) {
+    await thermostatCluster.configureReporting({
+      localTemperature: {
+        minInterval: 30,
+        maxInterval: 300,
+        minChange:   5,
+      },
+      occupiedHeatingSetpoint: {
+        minInterval: 5,
+        maxInterval: 300,
+        minChange:   25,
+      },
+      systemMode: {
+        minInterval: 5,
+        maxInterval: 300,
+        minChange:   0,
+      },
+    });
+    this.log('[WheelThermostatDevice] configureReporting OK');
   }
 
   // ── Ri-annuncio sul network: aggiorna tutti i valori ────────────────────
