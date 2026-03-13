@@ -3,18 +3,10 @@
 const { ZigBeeDevice } = require('homey-zigbeedriver');
 const { CLUSTER } = require('zigbee-clusters');
 
-// Zigbee represents temperatures in units of 0.01 °C
-const TEMP_FACTOR = 0.01;
+const TEMP_FACTOR    = 0.01;
+const THERMOSTAT_EP  = 10;
+const POLL_INTERVAL  = 30000; // 30 sec – fallback garantito
 
-// Endpoint del termostato Vimar WheelThermostat
-const THERMOSTAT_ENDPOINT = 10;
-
-// Poll interval come fallback se i report Zigbee non arrivano (ms)
-const POLL_INTERVAL = 60000; // 60 secondi
-
-/**
- * Maps Zigbee thermostat systemMode values → Homey thermostat_mode capability values.
- */
 const ZIGBEE_MODE_TO_HOMEY = {
   off:                 'off',
   heat:                'heat',
@@ -37,155 +29,143 @@ const HOMEY_MODE_TO_ZIGBEE = {
 class WheelThermostatDevice extends ZigBeeDevice {
 
   async onNodeInit({ zclNode }) {
-    this.log('[WheelThermostatDevice] onNodeInit');
+    this.log('[Thermostat] onNodeInit');
     this.printNode();
 
-    const thermostatCluster = zclNode.endpoints[THERMOSTAT_ENDPOINT].clusters.thermostat;
+    const cluster = zclNode.endpoints[THERMOSTAT_EP].clusters.thermostat;
 
-    // ── BIND esplicito del cluster thermostat ─────────────────────────────
-    // Necessario perché i report Zigbee arrivino all'hub
+    // ── 1. BIND esplicito ────────────────────────────────────────────────
     try {
-      await zclNode.endpoints[THERMOSTAT_ENDPOINT].clusters.thermostat.bind();
-      this.log('[WheelThermostatDevice] thermostat cluster bound OK');
+      await cluster.bind();
+      this.log('[Thermostat] bind OK');
     } catch (err) {
-      this.error('[WheelThermostatDevice] thermostat bind failed (non-fatal):', err.message);
+      this.error('[Thermostat] bind failed:', err.message);
     }
 
-    // ── measure_temperature (sola lettura) ────────────────────────────────
-    this.registerCapability('measure_temperature', CLUSTER.THERMOSTAT, {
-      endpoint: THERMOSTAT_ENDPOINT,
-      get:      'localTemperature',
-      getOpts: {
-        getOnStart:   true,
-        pollInterval: POLL_INTERVAL,   // FIX: fallback polling
-      },
-      report:       'localTemperature',
-      reportParser: value => {
-        const temp = parseFloat((value * TEMP_FACTOR).toFixed(2));
-        this.log(`[measure_temperature] ${value} → ${temp} °C`);
-        return temp;
-      },
-      reportOpts: {
-        configureAttributeReporting: {
+    // ── 2. CONFIGURE REPORTING diretto sul device ────────────────────────
+    try {
+      await cluster.configureReporting({
+        localTemperature: {
           minInterval: 30,
           maxInterval: 300,
-          minChange:   5,    // FIX: era 10 (=0.10 °C), ora 5 (=0.05 °C) più reattivo
+          minChange:   10,
         },
-      },
-    });
-
-    // ── target_temperature: lettura + polling ─────────────────────────────
-    this.registerCapability('target_temperature', CLUSTER.THERMOSTAT, {
-      endpoint: THERMOSTAT_ENDPOINT,
-      get:      'occupiedHeatingSetpoint',
-      getOpts: {
-        getOnStart:   true,
-        pollInterval: POLL_INTERVAL,   // FIX: aggiunto polling fallback
-      },
-      report:       'occupiedHeatingSetpoint',
-      reportParser: value => {
-        const temp = parseFloat((value * TEMP_FACTOR).toFixed(2));
-        this.log(`[target_temperature] report ${value} → ${temp} °C`);
-        return temp;
-      },
-      reportOpts: {
-        configureAttributeReporting: {
+        occupiedHeatingSetpoint: {
           minInterval: 5,
           maxInterval: 300,
-          minChange:   25,   // FIX: era 50 (=0.50 °C), ora 25 (=0.25 °C)
+          minChange:   25,
         },
-      },
+        systemMode: {
+          minInterval: 5,
+          maxInterval: 300,
+          minChange:   1,
+        },
+      });
+      this.log('[Thermostat] configureReporting OK');
+    } catch (err) {
+      this.error('[Thermostat] configureReporting failed (non-fatal):', err.message);
+    }
+
+    // ── 3. LISTENER DIRETTI sugli attributi del cluster ──────────────────
+    cluster.on('attr.localTemperature', (value) => {
+      const temp = parseFloat((value * TEMP_FACTOR).toFixed(2));
+      this.log(`[attr] localTemperature → ${temp} °C`);
+      this.setCapabilityValue('measure_temperature', temp).catch(this.error);
     });
 
-    // ── target_temperature: scrittura ─────────────────────────────────────
+    cluster.on('attr.occupiedHeatingSetpoint', (value) => {
+      const temp = parseFloat((value * TEMP_FACTOR).toFixed(2));
+      this.log(`[attr] occupiedHeatingSetpoint → ${temp} °C`);
+      this.setCapabilityValue('target_temperature', temp).catch(this.error);
+    });
+
+    cluster.on('attr.systemMode', (value) => {
+      const mode = ZIGBEE_MODE_TO_HOMEY[value] ?? 'off';
+      this.log(`[attr] systemMode "${value}" → "${mode}"`);
+      this.setCapabilityValue('thermostat_mode', mode).catch(this.error);
+    });
+
+    // ── 4. Lettura iniziale dei valori ───────────────────────────────────
+    await this._pollValues(cluster);
+
+    // ── 5. POLL LOOP manuale – fallback se i report non arrivano ─────────
+    this._pollTimer = this.homey.setInterval(async () => {
+      this.log('[Thermostat] polling...');
+      await this._pollValues(cluster);
+    }, POLL_INTERVAL);
+
+    // ── 6. SCRITTURA target_temperature ──────────────────────────────────
     this.registerCapabilityListener('target_temperature', async (value) => {
       const raw = Math.round(value / TEMP_FACTOR);
-      this.log(`[target_temperature] set ${value} °C → raw ${raw}`);
+      this.log(`[set] target_temperature ${value} °C → raw ${raw}`);
       try {
-        await thermostatCluster.writeAttributes({ occupiedHeatingSetpoint: raw });
-        this.log(`[target_temperature] writeAttributes OK`);
+        await cluster.writeAttributes({ occupiedHeatingSetpoint: raw });
       } catch (err) {
-        this.error('[target_temperature] writeAttributes failed:', err);
+        this.error('[set] target_temperature failed:', err);
         throw err;
       }
     });
 
-    // ── thermostat_mode: lettura + polling ────────────────────────────────
-    this.registerCapability('thermostat_mode', CLUSTER.THERMOSTAT, {
-      endpoint: THERMOSTAT_ENDPOINT,
-      get:      'systemMode',
-      getOpts: {
-        getOnStart:   true,
-        pollInterval: POLL_INTERVAL,   // FIX: aggiunto polling fallback
-      },
-      report:       'systemMode',
-      reportParser: value => {
-        const mode = ZIGBEE_MODE_TO_HOMEY[value] ?? 'off';
-        this.log(`[thermostat_mode] report "${value}" → "${mode}"`);
-        return mode;
-      },
-      reportOpts: {
-        configureAttributeReporting: {
-          minInterval: 5,
-          maxInterval: 300,
-          // minChange omesso: systemMode è un enum
-        },
-      },
-    });
-
-    // ── thermostat_mode: scrittura ────────────────────────────────────────
+    // ── 7. SCRITTURA thermostat_mode ──────────────────────────────────────
     this.registerCapabilityListener('thermostat_mode', async (value) => {
       const systemMode = HOMEY_MODE_TO_ZIGBEE[value] ?? 'off';
-      this.log(`[thermostat_mode] set "${value}" → systemMode "${systemMode}"`);
+      this.log(`[set] thermostat_mode "${value}" → "${systemMode}"`);
       try {
-        await thermostatCluster.writeAttributes({ systemMode });
-        this.log(`[thermostat_mode] writeAttributes OK`);
+        await cluster.writeAttributes({ systemMode });
       } catch (err) {
-        this.error('[thermostat_mode] writeAttributes failed:', err);
+        this.error('[set] thermostat_mode failed:', err);
         throw err;
       }
     });
-
-    // ── Configura attribute reporting manualmente come conferma ───────────
-    // Alcuni device ignorano la configurazione via registerCapability
-    this._configureReporting(thermostatCluster).catch(err =>
-      this.error('[WheelThermostatDevice] manual configureReporting failed:', err.message),
-    );
   }
 
   /**
-   * Configura attribute reporting direttamente sul cluster.
-   * Fallback nel caso in cui registerCapability non lo faccia correttamente.
+   * Legge i tre attributi direttamente dal device e aggiorna le capability.
    */
-  async _configureReporting(thermostatCluster) {
-    await thermostatCluster.configureReporting({
-      localTemperature: {
-        minInterval: 30,
-        maxInterval: 300,
-        minChange:   5,
-      },
-      occupiedHeatingSetpoint: {
-        minInterval: 5,
-        maxInterval: 300,
-        minChange:   25,
-      },
-      systemMode: {
-        minInterval: 5,
-        maxInterval: 300,
-        minChange:   0,
-      },
-    });
-    this.log('[WheelThermostatDevice] configureReporting OK');
+  async _pollValues(cluster) {
+    try {
+      const {
+        localTemperature,
+        occupiedHeatingSetpoint,
+        systemMode,
+      } = await cluster.readAttributes([
+        'localTemperature',
+        'occupiedHeatingSetpoint',
+        'systemMode',
+      ]);
+
+      if (localTemperature !== undefined) {
+        const temp = parseFloat((localTemperature * TEMP_FACTOR).toFixed(2));
+        this.log(`[poll] localTemperature → ${temp} °C`);
+        await this.setCapabilityValue('measure_temperature', temp);
+      }
+
+      if (occupiedHeatingSetpoint !== undefined) {
+        const temp = parseFloat((occupiedHeatingSetpoint * TEMP_FACTOR).toFixed(2));
+        this.log(`[poll] occupiedHeatingSetpoint → ${temp} °C`);
+        await this.setCapabilityValue('target_temperature', temp);
+      }
+
+      if (systemMode !== undefined) {
+        const mode = ZIGBEE_MODE_TO_HOMEY[systemMode] ?? 'off';
+        this.log(`[poll] systemMode "${systemMode}" → "${mode}"`);
+        await this.setCapabilityValue('thermostat_mode', mode);
+      }
+    } catch (err) {
+      this.error('[poll] readAttributes failed:', err.message);
+    }
   }
 
-  // ── Ri-annuncio sul network: aggiorna tutti i valori ────────────────────
-  async onEndDeviceAnnounce() {
-    this.log('[WheelThermostatDevice] device announced – refreshing attributes');
-    try {
-      await this.refreshCapabilityValues();
-    } catch (err) {
-      this.error('[WheelThermostatDevice] refresh after announce failed:', err);
+  onDeleted() {
+    if (this._pollTimer) {
+      this.homey.clearInterval(this._pollTimer);
     }
+  }
+
+  async onEndDeviceAnnounce() {
+    this.log('[Thermostat] device announced – polling now');
+    const cluster = this.zclNode?.endpoints[THERMOSTAT_EP]?.clusters?.thermostat;
+    if (cluster) await this._pollValues(cluster);
   }
 
 }
