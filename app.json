@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "it.vimar",
-  "version": "1.3.12",
+  "version": "1.3.13",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "platforms": [
@@ -392,9 +392,9 @@
         "zigbee"
       ],
       "images": {
-        "xlarge": "/drivers/window_cov_v10/assets/images/vimar_shutter_1000x1000.png",
-        "large": "/drivers/window_cov_v10/assets/images/vimar_shutter_500x500.png",
-        "small": "/drivers/window_cov_v10/assets/images/vimar_shutter_75x75.png"
+        "xlarge": "/drivers/window_cov_v10/assets/images/vimar_plana_1000x1000.png",
+        "large": "/drivers/window_cov_v10/assets/images/vimar_plana_500x500.png",
+        "small": "/drivers/window_cov_v10/assets/images/vimar_plana_75x75.png"
       },
       "id": "window_cov_v10",
       "settings": [
