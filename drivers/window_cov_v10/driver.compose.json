@@ -56,8 +56,8 @@
     "zigbee"
   ],
   "images": {
-    "xlarge": "{{driverAssetsPath}}/images/Vimar_14594_XLarge.jpgg",
-    "large": "{{driverAssetsPath}}/images/Vimar_14594_Large.jpg",
-    "small": "{{driverAssetsPath}}/images/Vimar_14594_Small.jpg"
+    "xlarge": "{{driverAssetsPath}}/images/vimar_plana_1000x1000.png",
+    "large": "{{driverAssetsPath}}/images/vimar_plana_500x500.png",
+    "small": "{{driverAssetsPath}}/images/vimar_plana_75x75.png"
   }
 }

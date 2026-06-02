@@ -51,8 +51,8 @@
     "local"
   ],
   "images": {
-    "xlarge": "{{driverAssetsPath}}/images/WheelThermostat_XLarge.jpg",
-    "large": "{{driverAssetsPath}}/images/WheelThermostat_Large.jpg",
-    "small": "{{driverAssetsPath}}/images/WheelThermostat_Small.jpg"
+    "xlarge": "{{driverAssetsPath}}/images/vimar_thermo_1000x1000.png",
+    "large": "{{driverAssetsPath}}/images/vimar_thermo_500x500.png",
+    "small": "{{driverAssetsPath}}/images/vimar_thermo_75x75.png"
   }
 }
