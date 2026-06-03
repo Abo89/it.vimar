@@ -1,0 +1,341 @@
+
+  "ids": {
+    "modelId": "On_Off_Switch_Module_v1.0",
+    "manufacturerName": "Vimar"
+  },
+  "endpoints": {
+    "ieeeAddress": "f4:ce:36:58:2f:0e:97:a1",
+    "networkAddress": 17481,
+    "modelId": "On_Off_Switch_Module_v1.0",
+    "manufacturerName": "Vimar",
+    "endpointDescriptors": [
+      {
+        "status": "SUCCESS",
+        "nwkAddrOfInterest": 17481,
+        "_reserved": 24,
+        "endpointId": 10,
+        "applicationProfileId": 260,
+        "applicationDeviceId": 0,
+        "applicationDeviceVersion": 0,
+        "_reserved1": 0,
+        "inputClusters": [
+          6,
+          0,
+          3,
+          7,
+          5,
+          4
+        ],
+        "outputClusters": [
+          6,
+          3
+        ]
+      },
+      {
+        "status": "SUCCESS",
+        "nwkAddrOfInterest": 17481,
+        "_reserved": 10,
+        "endpointId": 242,
+        "applicationProfileId": 41440,
+        "applicationDeviceId": 97,
+        "applicationDeviceVersion": 0,
+        "_reserved1": 0,
+        "inputClusters": [],
+        "outputClusters": [
+          33
+        ]
+      }
+    ],
+    "deviceType": "router",
+    "receiveWhenIdle": true,
+    "swBuildId": "",
+    "capabilities": {
+      "alternatePANCoordinator": false,
+      "deviceType": true,
+      "powerSourceMains": true,
+      "receiveWhenIdle": true,
+      "security": false,
+      "allocateAddress": true
+    },
+    "extendedEndpointDescriptors": {
+      "10": {
+        "clusters": {
+          "onOff": {
+            "attributes": [
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 0,
+                "dataTypeId": 16,
+                "name": "onOff",
+                "value": false
+              }
+            ],
+            "commandsGenerated": [],
+            "commandsReceived": [
+              "setOff",
+              "setOn",
+              "toggle"
+            ]
+          },
+          "basic": {
+            "attributes": [
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 0,
+                "dataTypeId": 32,
+                "name": "zclVersion",
+                "value": 2
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 1,
+                "dataTypeId": 32,
+                "name": "appVersion",
+                "value": 1
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 2,
+                "dataTypeId": 32,
+                "name": "stackVersion",
+                "value": 10
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 3,
+                "dataTypeId": 32,
+                "name": "hwVersion",
+                "value": 11
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 4,
+                "dataTypeId": 66,
+                "name": "manufacturerName",
+                "value": "Vimar"
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 5,
+                "dataTypeId": 66,
+                "name": "modelId",
+                "value": "On_Off_Switch_Module_v1.0"
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 6,
+                "dataTypeId": 66,
+                "name": "dateCode",
+                "value": "20200501"
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 7,
+                "dataTypeId": 48,
+                "name": "powerSource",
+                "value": "mains"
+              }
+            ],
+            "commandsGenerated": [],
+            "commandsReceived": [
+              "factoryReset"
+            ]
+          },
+          "identify": {
+            "attributes": [
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 0,
+                "dataTypeId": 33,
+                "name": "identifyTime",
+                "value": 0
+              }
+            ],
+            "commandsGenerated": [
+              "identifyQuery.response"
+            ],
+            "commandsReceived": [
+              "identify",
+              "identifyQuery",
+              "triggerEffect"
+            ]
+          },
+          "onOffSwitch": {
+            "attributes": [
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 0,
+                "dataTypeId": 48
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 16,
+                "dataTypeId": 48
+              }
+            ],
+            "commandsGenerated": [],
+            "commandsReceived": []
+          },
+          "scenes": {
+            "attributes": [
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 0,
+                "dataTypeId": 32
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 1,
+                "dataTypeId": 32
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 2,
+                "dataTypeId": 33
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 3,
+                "dataTypeId": 16
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 4,
+                "dataTypeId": 24
+              }
+            ],
+            "commandsGenerated": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              6
+            ],
+            "commandsReceived": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          },
+          "groups": {
+            "attributes": [
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 0,
+                "dataTypeId": 24,
+                "name": "nameSupport",
+                "value": {
+                  "type": "Buffer",
+                  "data": [
+                    0
+                  ]
+                }
+              }
+            ],
+            "commandsGenerated": [
+              "addGroup.response",
+              "viewGroup.response",
+              "getGroupMembership.response",
+              "removeGroup.response"
+            ],
+            "commandsReceived": [
+              "addGroup",
+              "viewGroup",
+              "getGroupMembership",
+              "removeGroup",
+              "removeAllGroups",
+              "addGroupIfIdentify"
+            ]
+          }
+        },
+        "bindings": {
+          "onOff": {
+            "attributes": [
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 0,
+                "dataTypeId": 16,
+                "name": "onOff",
+                "value": false
+              }
+            ],
+            "commandsGenerated": [],
+            "commandsReceived": [
+              "setOff",
+              "setOn",
+              "toggle"
+            ]
+          },
+          "identify": {
+            "attributes": [
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 0,
+                "dataTypeId": 33,
+                "name": "identifyTime",
+                "value": 0
+              }
+            ],
+            "commandsGenerated": [
+              "identifyQuery.response"
+            ],
+            "commandsReceived": [
+              "identify",
+              "identifyQuery",
+              "triggerEffect"
+            ]
+          }
+        }
+      },
+      "242": {
+        "clusters": {},
+        "bindings": {}
+      }
+    }
+  }
+

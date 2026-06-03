@@ -1,0 +1,296 @@
+"ids": {
+"modelId": "WheelThermostat_v1.0",
+"manufacturerName": "Vimar"
+},
+"endpoints": {
+"ieeeAddress": "f4:ce:36:44:ab:14:6f:98",
+"networkAddress": 50951,
+"modelId": "WheelThermostat_v1.0",
+"manufacturerName": "Vimar",
+"endpointDescriptors": [
+{
+"status": "SUCCESS",
+"nwkAddrOfInterest": 50951,
+"_reserved": 14,
+"endpointId": 10,
+"applicationProfileId": 260,
+"applicationDeviceId": 769,
+"applicationDeviceVersion": 0,
+"_reserved1": 1,
+"inputClusters": [
+0,
+3,
+513
+],
+"outputClusters": []
+},
+{
+"status": "SUCCESS",
+"nwkAddrOfInterest": 50951,
+"_reserved": 10,
+"endpointId": 242,
+"applicationProfileId": 41440,
+"applicationDeviceId": 97,
+"applicationDeviceVersion": 0,
+"_reserved1": 0,
+"inputClusters": [],
+"outputClusters": [
+33
+]
+}
+],
+"deviceType": "router",
+"receiveWhenIdle": true,
+"swBuildId": "1.0.0_z",
+"capabilities": {
+"alternatePANCoordinator": false,
+"deviceType": true,
+"powerSourceMains": true,
+"receiveWhenIdle": true,
+"security": false,
+"allocateAddress": true
+},
+"extendedEndpointDescriptors": {
+"10": {
+"clusters": {
+"basic": {
+"attributes": [
+{
+"acl": [
+"readable"
+],
+"id": 0,
+"name": "zclVersion",
+"value": 8
+},
+{
+"acl": [
+"readable"
+],
+"id": 1,
+"name": "appVersion",
+"value": 1
+},
+{
+"acl": [
+"readable"
+],
+"id": 2,
+"name": "stackVersion",
+"value": 42
+},
+{
+"acl": [
+"readable"
+],
+"id": 3,
+"name": "hwVersion",
+"value": 1
+},
+{
+"acl": [
+"readable"
+],
+"id": 4,
+"name": "manufacturerName",
+"value": "Vimar"
+},
+{
+"acl": [
+"readable"
+],
+"id": 5,
+"name": "modelId",
+"value": "WheelThermostat_v1.0"
+},
+{
+"acl": [
+"readable"
+],
+"id": 6,
+"name": "dateCode",
+"value": "20230301"
+},
+{
+"acl": [
+"readable"
+],
+"id": 7,
+"name": "powerSource",
+"value": "mains"
+}
+],
+"commandsGenerated": [],
+"commandsReceived": [
+"factoryReset"
+]
+},
+"identify": {
+"attributes": [
+{
+"acl": [
+"readable",
+"writable"
+],
+"id": 0,
+"name": "identifyTime",
+"value": 0
+}
+],
+"commandsGenerated": [
+"identifyQuery.response"
+],
+"commandsReceived": [
+"identify",
+"identifyQuery",
+"triggerEffect"
+]
+},
+"thermostat": {
+"attributes": [
+{
+"acl": [
+"readable"
+],
+"id": 0,
+"name": "localTemperature",
+"value": 2170
+},
+{
+"acl": [
+"readable"
+],
+"id": 3,
+"name": "absMinHeatSetpointLimit",
+"value": 400
+},
+{
+"acl": [
+"readable"
+],
+"id": 4,
+"name": "absMaxHeatSetpointLimit",
+"value": 4000
+},
+{
+"acl": [
+"readable"
+],
+"id": 5,
+"name": "absMinCoolSetpointLimit",
+"value": 400
+},
+{
+"acl": [
+"readable"
+],
+"id": 6,
+"name": "absMaxCoolSetpointLimit",
+"value": 4000
+},
+{
+"acl": [
+"readable",
+"writable"
+],
+"id": 17,
+"name": "occupiedCoolingSetpoint",
+"value": 4000
+},
+{
+"acl": [
+"readable",
+"writable"
+],
+"id": 18,
+"name": "occupiedHeatingSetpoint",
+"value": 1620
+},
+{
+"acl": [
+"readable",
+"writable"
+],
+"id": 21,
+"name": "minHeatSetpointLimit",
+"value": 500
+},
+{
+"acl": [
+"readable",
+"writable"
+],
+"id": 22,
+"name": "maxHeatSetpointLimit",
+"value": 3900
+},
+{
+"acl": [
+"readable",
+"writable"
+],
+"id": 23,
+"name": "minCoolSetpointLimit",
+"value": 600
+},
+{
+"acl": [
+"readable",
+"writable"
+],
+"id": 24,
+"name": "maxCoolSetpointLimit",
+"value": 4000
+},
+{
+"acl": [
+"readable",
+"writable"
+],
+"id": 27,
+"name": "controlSequenceOfOperation",
+"value": "heating"
+},
+{
+"acl": [
+"readable",
+"writable"
+],
+"id": 28,
+"name": "systemMode",
+"value": "heat"
+},
+{
+"acl": [
+"readable"
+],
+"id": 30
+},
+{
+"acl": [
+"readable"
+],
+"id": 41
+}
+],
+"commandsGenerated": [
+"setSetpoint",
+1
+],
+"commandsReceived": [
+"setSetpoint",
+1,
+2,
+3,
+4
+]
+}
+},
+"bindings": {}
+},
+"242": {
+"clusters": {},
+"bindings": {}
+}
+}
+}
