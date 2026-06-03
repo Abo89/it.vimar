@@ -1,0 +1,638 @@
+{
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "it.vimar",
+  "version": "1.4.3",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "Vimar",
+    "it": "Vimar"
+  },
+  "description": {
+    "en": "Vimar IoT devices",
+    "it": "Dispositivi IoT Vimar"
+  },
+  "category": [
+    "tools"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/Logo_Vimar_Small.png",
+    "large": "/assets/images/Logo_Vimar_Large.png",
+    "xlarge": "/assets/images/Logo_Vimar_XLarge.png"
+  },
+  "author": {
+    "name": "Andrea Alberti"
+  },
+  "brandColor": "#cac814",
+  "drivers": [
+    {
+      "name": {
+        "en": "DimmerSwitch_v1.0"
+      },
+      "class": "light",
+      "capabilities": [
+        "dim",
+        "onoff"
+      ],
+      "zigbee": {
+        "manufacturerName": "Vimar",
+        "productId": [
+          "DimmerSwitch_v1.0"
+        ],
+        "endpoints": {
+          "10": {
+            "clusters": [
+              0,
+              3,
+              6,
+              8
+            ],
+            "bindings": [
+              6,
+              8
+            ]
+          },
+          "11": {
+            "clusters": [
+              0,
+              3,
+              4,
+              5,
+              6,
+              8
+            ]
+          }
+        },
+        "learnmode": {
+          "instruction": {
+            "en": "Please read the documentation to put devices in learn mode"
+          }
+        }
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "zigbee"
+      ],
+      "images": {
+        "xlarge": "/drivers/dimmerswitch_v10/assets/images/vimar_dimmer_1000x1000.png",
+        "large": "/drivers/dimmerswitch_v10/assets/images/vimar_dimmer_500x500.png",
+        "small": "/drivers/dimmerswitch_v10/assets/images/vimar_dimmer_75x75.png"
+      },
+      "id": "dimmerswitch_v10"
+    },
+    {
+      "name": {
+        "en": "Mains_Power_Outlet_v1.0",
+        "it": "Mains_Power_Outlet_v1.0"
+      },
+      "class": "button",
+      "capabilities": [
+        "onoff",
+        "measure_power"
+      ],
+      "zigbee": {
+        "manufacturerName": "Vimar",
+        "productId": [
+          "Mains_Power_Outlet_v1.0"
+        ],
+        "endpoints": {
+          "10": {
+            "clusters": [
+              0,
+              3,
+              6,
+              2820,
+              5,
+              4
+            ],
+            "bindings": [
+              6
+            ]
+          }
+        },
+        "learnmode": {
+          "instruction": {
+            "en": "Please read the documentation to put devices in learn mode"
+          }
+        }
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "zigbee"
+      ],
+      "images": {
+        "xlarge": "/drivers/mains_power_outlet_v10/assets/images/Vimar_14592_XLarge.png",
+        "large": "/drivers/mains_power_outlet_v10/assets/images/Vimar_14592_Large.png",
+        "small": "/drivers/mains_power_outlet_v10/assets/images/Vimar_14592_Small.png"
+      },
+      "id": "mains_power_outlet_v10"
+    },
+    {
+      "name": {
+        "en": "On_Off_Switch_Module_v1.0",
+        "it": "On_Off_Switch_Module_v1.0"
+      },
+      "class": "light",
+      "capabilities": [
+        "onoff"
+      ],
+      "zigbee": {
+        "manufacturerName": "Vimar",
+        "productId": [
+          "On_Off_Switch_Module_v1.0"
+        ],
+        "endpoints": {
+          "10": {
+            "clusters": [
+              0,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "bindings": [
+              6
+            ]
+          }
+        },
+        "learnmode": {
+          "instruction": {
+            "en": "Please read the documentation to put devices in learn mode"
+          }
+        }
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "connectivity": [
+        "zigbee"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "images": {
+        "xlarge": "/drivers/on_off_switch_module_v10/assets/images/vimar_actuator_1000x1000.png",
+        "large": "/drivers/on_off_switch_module_v10/assets/images/vimar_actuator_500x500.png",
+        "small": "/drivers/on_off_switch_module_v10/assets/images/vimar_actuator_75x75.png"
+      },
+      "id": "on_off_switch_module_v10"
+    },
+    {
+      "name": {
+        "en": "On_Off_Switch_v1.0",
+        "it": "On_Off_Switch_v1.0"
+      },
+      "class": "light",
+      "capabilities": [
+        "onoff"
+      ],
+      "zigbee": {
+        "manufacturerName": "Vimar",
+        "productId": [
+          "On_Off_Switch_v1.0"
+        ],
+        "endpoints": {
+          "10": {
+            "clusters": [
+              0,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "bindings": [
+              6
+            ]
+          }
+        },
+        "learnmode": {
+          "instruction": {
+            "en": "Please read the documentation to put devices in learn mode"
+          }
+        }
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "connectivity": [
+        "zigbee"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "images": {
+        "xlarge": "/drivers/on_off_switch_v10/assets/images/pulsante_bw_1000x1000.png",
+        "large": "/drivers/on_off_switch_v10/assets/images/pulsante_bw_500x500.png",
+        "small": "/drivers/on_off_switch_v10/assets/images/pulsante_bw_75x75.png"
+      },
+      "id": "on_off_switch_v10"
+    },
+    {
+      "name": {
+        "en": "RemoteControl_v1.0"
+      },
+      "class": "remote",
+      "_appSpecific": {
+        "brand": "Vimar",
+        "modelID": "RemoteControl_v1.0"
+      },
+      "capabilities": [],
+      "energy": {
+        "batteries": [
+          "CR2032"
+        ]
+      },
+      "zigbee": {
+        "manufacturerName": "Vimar",
+        "productId": [
+          "RemoteControl_v1.0"
+        ],
+        "endpoints": {
+          "10": {
+            "clusters": [
+              0,
+              3
+            ],
+            "bindings": [
+              3,
+              6,
+              8,
+              258
+            ]
+          }
+        },
+        "learnmode": {
+          "instruction": {
+            "en": "Please read the documentation to put the remote control in learn mode",
+            "it": "Consultare la documentazione per mettere il telecomando in modalità di apprendimento"
+          }
+        }
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "zigbee"
+      ],
+      "images": {
+        "xlarge": "/drivers/remotecontrol_v10/assets/images/xlarge.png",
+        "large": "/drivers/remotecontrol_v10/assets/images/large.png",
+        "small": "/drivers/remotecontrol_v10/assets/images/small.png"
+      },
+      "id": "remotecontrol_v10"
+    },
+    {
+      "name": {
+        "en": "WheelThermostat_v1.0",
+        "it": "WheelThermostat_v1.0"
+      },
+      "class": "thermostat",
+      "capabilities": [
+        "measure_temperature",
+        "target_temperature",
+        "thermostat_mode"
+      ],
+      "capabilitiesOptions": {
+        "target_temperature": {
+          "min": 5,
+          "max": 39,
+          "step": 0.5
+        },
+        "thermostat_mode": {
+          "values": [
+            {
+              "id": "off",
+              "title": {
+                "en": "Off",
+                "it": "Spento"
+              }
+            },
+            {
+              "id": "heat",
+              "title": {
+                "en": "Heat",
+                "it": "Riscaldamento"
+              }
+            },
+            {
+              "id": "auto",
+              "title": {
+                "en": "Auto",
+                "it": "Automatico"
+              }
+            }
+          ]
+        }
+      },
+      "zigbee": {
+        "manufacturerName": "Vimar",
+        "productId": [
+          "WheelThermostat_v1.0"
+        ],
+        "endpoints": {
+          "10": {
+            "clusters": [
+              0,
+              3,
+              513
+            ],
+            "bindings": [
+              513
+            ]
+          }
+        },
+        "learnmode": {
+          "instruction": {
+            "en": "Press and hold the wheel button for 5 seconds until the LED blinks rapidly to enter pairing mode.",
+            "it": "Tieni premuto il pulsante rotella per 5 secondi finché il LED lampeggia rapidamente per entrare in modalità di abbinamento."
+          }
+        }
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "connectivity": [
+        "zigbee"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "images": {
+        "xlarge": "/drivers/wheelthermostat_v10/assets/images/vimar_thermo_1000x1000.png",
+        "large": "/drivers/wheelthermostat_v10/assets/images/vimar_thermo_500x500.png",
+        "small": "/drivers/wheelthermostat_v10/assets/images/vimar_thermo_75x75.png"
+      },
+      "id": "wheelthermostat_v10"
+    },
+    {
+      "name": {
+        "en": "Window_Cov_v1.0"
+      },
+      "class": "blinds",
+      "_appSpecific": {
+        "brand": "Vimar",
+        "modelID": "Window_Cov_v1.0"
+      },
+      "capabilities": [
+        "windowcoverings_set",
+        "windowcoverings_tilt_set",
+        "windowcoverings_state"
+      ],
+      "zigbee": {
+        "manufacturerName": "Vimar",
+        "productId": [
+          "Window_Cov_v1.0"
+        ],
+        "endpoints": {
+          "10": {
+            "clusters": [
+              0,
+              3,
+              4,
+              5,
+              258
+            ],
+            "bindings": [
+              258
+            ]
+          }
+        },
+        "learnmode": {
+          "instruction": {
+            "en": "Please read the documentation to put devices in learn mode"
+          }
+        }
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "zigbee"
+      ],
+      "images": {
+        "xlarge": "/drivers/window_cov_v10/assets/images/vimar_plana_1000x1000.png",
+        "large": "/drivers/window_cov_v10/assets/images/vimar_plana_500x500.png",
+        "small": "/drivers/window_cov_v10/assets/images/vimar_plana_75x75.png"
+      },
+      "id": "window_cov_v10",
+      "settings": []
+    }
+  ],
+  "flow": {
+    "triggers": [
+      {
+        "id": "remote_button_pressed",
+        "title": {
+          "en": "A button was pressed",
+          "it": "Un pulsante è stato premuto"
+        },
+        "titleFormatted": {
+          "en": "Button [[action]] was pressed",
+          "it": "Il pulsante [[action]] è stato premuto"
+        },
+        "hint": {
+          "en": "Triggers when the remote control sends a command. Pick which command to react to.",
+          "it": "Si attiva quando il telecomando invia un comando. Scegli a quale comando reagire."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=remotecontrol_v10"
+          },
+          {
+            "type": "dropdown",
+            "name": "action",
+            "values": [
+              {
+                "id": "on",
+                "title": {
+                  "en": "On",
+                  "it": "Acceso (On)"
+                }
+              },
+              {
+                "id": "off",
+                "title": {
+                  "en": "Off",
+                  "it": "Spento (Off)"
+                }
+              },
+              {
+                "id": "toggle",
+                "title": {
+                  "en": "Toggle",
+                  "it": "Inverti (Toggle)"
+                }
+              },
+              {
+                "id": "dim_up",
+                "title": {
+                  "en": "Dim up (hold +)",
+                  "it": "Aumenta luminosità (tieni +)"
+                }
+              },
+              {
+                "id": "dim_down",
+                "title": {
+                  "en": "Dim down (hold -)",
+                  "it": "Diminuisci luminosità (tieni -)"
+                }
+              },
+              {
+                "id": "dim_stop",
+                "title": {
+                  "en": "Dim stop (release)",
+                  "it": "Ferma dimmer (rilascio)"
+                }
+              },
+              {
+                "id": "open",
+                "title": {
+                  "en": "Open / Up",
+                  "it": "Apri / Su"
+                }
+              },
+              {
+                "id": "close",
+                "title": {
+                  "en": "Close / Down",
+                  "it": "Chiudi / Giù"
+                }
+              },
+              {
+                "id": "cover_stop",
+                "title": {
+                  "en": "Cover stop",
+                  "it": "Ferma tapparella"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "move_open",
+        "title": {
+          "en": "Open",
+          "de": "Öffnen"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=window_cov_v10"
+          }
+        ]
+      },
+      {
+        "id": "move_close",
+        "title": {
+          "en": "Close",
+          "de": "Schließen"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=window_cov_v10"
+          }
+        ]
+      }
+    ]
+  }
+}
