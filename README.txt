@@ -1,3 +1,0 @@
-# Vimar
-
-Vimar devices
