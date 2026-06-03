@@ -1,0 +1,199 @@
+{
+   
+  "ids": {
+    "modelId": "RemoteControl_v1.0",
+    "manufacturerName": "Vimar"
+  },
+  "endpoints": {
+    "ieeeAddress": "f4:ce:36:12:b5:5f:34:4b",
+    "networkAddress": 18723,
+    "modelId": "RemoteControl_v1.0",
+    "manufacturerName": "Vimar",
+    "endpointDescriptors": [
+      {
+        "status": "SUCCESS",
+        "nwkAddrOfInterest": 18723,
+        "_reserved": 20,
+        "endpointId": 10,
+        "applicationProfileId": 260,
+        "applicationDeviceId": 6,
+        "applicationDeviceVersion": 0,
+        "_reserved1": 0,
+        "inputClusters": [
+          0,
+          3
+        ],
+        "outputClusters": [
+          3,
+          6,
+          258,
+          8
+        ]
+      },
+      {
+        "status": "SUCCESS",
+        "nwkAddrOfInterest": 18723,
+        "_reserved": 10,
+        "endpointId": 242,
+        "applicationProfileId": 41440,
+        "applicationDeviceId": 97,
+        "applicationDeviceVersion": 0,
+        "_reserved1": 0,
+        "inputClusters": [],
+        "outputClusters": [
+          33
+        ]
+      }
+    ],
+    "deviceType": "router",
+    "receiveWhenIdle": true,
+    "swBuildId": "1.1.1_z",
+    "capabilities": {
+      "alternatePANCoordinator": false,
+      "deviceType": true,
+      "powerSourceMains": true,
+      "receiveWhenIdle": true,
+      "security": false,
+      "allocateAddress": true
+    },
+    "extendedEndpointDescriptors": {
+      "10": {
+        "clusters": {
+          "basic": {
+            "attributes": [
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 0,
+                "dataTypeId": 32,
+                "name": "zclVersion",
+                "value": 8
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 1,
+                "dataTypeId": 32,
+                "name": "appVersion",
+                "value": 1
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 2,
+                "dataTypeId": 32,
+                "name": "stackVersion",
+                "value": 42
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 3,
+                "dataTypeId": 32,
+                "name": "hwVersion",
+                "value": 1
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 4,
+                "dataTypeId": 66,
+                "name": "manufacturerName",
+                "value": "Vimar"
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 5,
+                "dataTypeId": 66,
+                "name": "modelId",
+                "value": "RemoteControl_v1.0"
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 6,
+                "dataTypeId": 66,
+                "name": "dateCode",
+                "value": "20240802"
+              },
+              {
+                "acl": [
+                  "readable"
+                ],
+                "id": 7,
+                "dataTypeId": 48,
+                "name": "powerSource",
+                "value": "mains"
+              }
+            ],
+            "commandsGenerated": [],
+            "commandsReceived": [
+              "factoryReset"
+            ]
+          },
+          "identify": {
+            "attributes": [
+              {
+                "acl": [
+                  "readable",
+                  "writable"
+                ],
+                "id": 0,
+                "dataTypeId": 33,
+                "name": "identifyTime",
+                "value": 0
+              }
+            ],
+            "commandsGenerated": [
+              "identifyQuery.response"
+            ],
+            "commandsReceived": [
+              "identify",
+              "identifyQuery",
+              "triggerEffect"
+            ]
+          }
+        },
+        "bindings": {
+          "identify": {
+            "attributes": [
+              {
+                "acl": [
+                  "readable",
+                  "writable"
+                ],
+                "id": 0,
+                "dataTypeId": 33,
+                "name": "identifyTime",
+                "value": 0
+              }
+            ],
+            "commandsGenerated": [
+              "identifyQuery.response"
+            ],
+            "commandsReceived": [
+              "identify",
+              "identifyQuery",
+              "triggerEffect"
+            ]
+          },
+          "onOff": {},
+          "windowCovering": {},
+          "levelControl": {}
+        }
+      },
+      "242": {
+        "clusters": {},
+        "bindings": {}
+      }
+    }
+  }
+}
