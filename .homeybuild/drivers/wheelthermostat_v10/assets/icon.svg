@@ -1,6 +1,5 @@
 <svg viewBox="0 0 596 641" xmlns="http://www.w3.org/2000/svg">
-  <!-- Bianco e nero puro: solo #000 e #fff. Posizioni ricavate dalla foto. -->
-  <rect x="0" y="0" width="596" height="641" fill="#ffffff"/>
+  <!-- Bianco e nero puro: solo #000 e #fff. Sfondo trasparente. -->
 
   <!-- Tacche di aggancio (nere) -->
   <rect x="44" y="29" width="22" height="23" rx="3" fill="#000000"/>
@@ -24,15 +23,15 @@
   <polygon points="290,612 304,612 297,601" fill="#000000"/>
 
   <!-- Corpo -->
-  <rect x="30" y="50" width="537" height="540" rx="28" fill="#ffffff" stroke="#000000" stroke-width="3"/>
+  <rect x="30" y="50" width="537" height="540" rx="28" fill="none" stroke="#000000" stroke-width="3"/>
 
   <!-- Anello luminoso: bordi (banda bianca tra due cerchi) -->
   <circle cx="297" cy="320" r="252" fill="none" stroke="#000000" stroke-width="3"/>
   <circle cx="297" cy="320" r="206" fill="none" stroke="#000000" stroke-width="3"/>
 
   <!-- Cornice del display -->
-  <circle cx="297" cy="320" r="174" fill="#ffffff" stroke="#000000" stroke-width="6"/>
-  <circle cx="297" cy="320" r="166" fill="#ffffff" stroke="#000000" stroke-width="1.5"/>
+  <circle cx="297" cy="320" r="174" fill="none" stroke="#000000" stroke-width="6"/>
+  <circle cx="297" cy="320" r="166" fill="none" stroke="#000000" stroke-width="1.5"/>
 
   <!-- Cifre 20.3 (matrice di punti) -->
     <circle cx="208.0" cy="278.0" r="6.0" fill="#000000"/>
