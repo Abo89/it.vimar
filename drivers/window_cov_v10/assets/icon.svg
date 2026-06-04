@@ -1,50 +1,40 @@
-<svg viewBox="0 0 320 640" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 380 600" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="key" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%"   stop-color="#ededed"/>
-      <stop offset="10%"  stop-color="#ffffff"/>
-      <stop offset="50%"  stop-color="#ffffff"/>
-      <stop offset="90%"  stop-color="#fbfbfb"/>
-      <stop offset="100%" stop-color="#e6e6e6"/>
-    </linearGradient>
-    <linearGradient id="tab" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="100%" stop-color="#e6e6e6"/>
-    </linearGradient>
-    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
-      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#000000" flood-opacity="0.16"/>
-    </filter>
-    <radialGradient id="led" cx="40%" cy="35%" r="70%">
-      <stop offset="0%"  stop-color="#d6ffce"/>
-      <stop offset="35%" stop-color="#5cd13a"/>
-      <stop offset="100%" stop-color="#1f8f12"/>
-    </radialGradient>
+    <!-- Ombra interna sottile -->
   </defs>
 
-  <!-- Tacche d'aggancio agli angoli -->
-  <g fill="url(#tab)" stroke="#dcdcdc" stroke-width="1">
-    <rect x="33"  y="16"  width="30" height="34" rx="6"/>
-    <rect x="257" y="16"  width="30" height="34" rx="6"/>
-    <rect x="33"  y="590" width="30" height="34" rx="6"/>
-    <rect x="257" y="590" width="30" height="34" rx="6"/>
-  </g>
+  <!-- Sfondo trasparente -->
 
-  <!-- Tasto superiore -->
-  <g filter="url(#soft)">
-    <rect x="27" y="36" width="266" height="268" rx="18" fill="url(#key)" stroke="#e0e0e0" stroke-width="1.5"/>
-  </g>
-  <!-- Freccia su (contorno) -->
-  <polygon points="161,150 107,202 215,202" fill="none" stroke="#9c9c9c" stroke-width="5" stroke-linejoin="round"/>
+  <!-- ===== CORNICE ESTERNA (stile placca Vimar) ===== -->
+  <!-- Placca esterna -->
+  <rect x="12" y="12" width="356" height="576" rx="32" ry="32"
+        fill="none" stroke="#000000" stroke-width="3.5"/>
+  <!-- Cornice interna -->
+  <rect x="40" y="40" width="300" height="520" rx="22" ry="22"
+        fill="none" stroke="#000000" stroke-width="2"/>
 
-  <!-- Tasto inferiore -->
-  <g filter="url(#soft)">
-    <rect x="27" y="336" width="266" height="268" rx="18" fill="url(#key)" stroke="#e0e0e0" stroke-width="1.5"/>
-  </g>
-  <!-- Freccia giù (contorno) -->
-  <polygon points="107,438 215,438 161,490" fill="none" stroke="#9c9c9c" stroke-width="5" stroke-linejoin="round"/>
+  <!-- ===== CONTENUTO (tasti) ===== -->
+  <g transform="translate(50,60)">
+    <!-- ===== TASTO SUPERIORE ===== -->
+    <g>
+      <rect x="14" y="12" width="252" height="210" rx="14" ry="14"
+            fill="none" stroke="#000000" stroke-width="1"/>
+    </g>
 
-  <!-- Spia LED verde (centrale) -->
-  <circle cx="154" cy="320" r="10" fill="url(#led)"/>
-  <circle cx="154" cy="320" r="10" fill="none" stroke="#176e0c" stroke-width="1"/>
-  <circle cx="150" cy="316" r="3" fill="#ffffff" opacity="0.8"/>
+    <!-- Freccia SU (tapparella sale) - stile contorno -->
+    <polygon points="140,91 86,143 194,143" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round"/>
+
+    <!-- ===== TACCA / FORO CENTRALE ===== -->
+    <circle cx="140" cy="240" r="14" fill="none" stroke="#000000" stroke-width="1.5"/>
+    <circle cx="140" cy="240" r="6" fill="#000000"/>
+
+    <!-- ===== TASTO INFERIORE ===== -->
+    <g>
+      <rect x="14" y="258" width="252" height="210" rx="14" ry="14"
+            fill="none" stroke="#000000" stroke-width="1"/>
+    </g>
+
+    <!-- Freccia GIÙ (tapparella scende) - stile contorno -->
+    <polygon points="86,337 194,337 140,389" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round"/>
+  </g>
 </svg>

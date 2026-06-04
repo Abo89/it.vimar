@@ -1,42 +1,10 @@
 <svg viewBox="0 0 320 640" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="key" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%"   stop-color="#ededed"/>
-      <stop offset="10%"  stop-color="#ffffff"/>
-      <stop offset="50%"  stop-color="#ffffff"/>
-      <stop offset="90%"  stop-color="#fbfbfb"/>
-      <stop offset="100%" stop-color="#e6e6e6"/>
-    </linearGradient>
-    <linearGradient id="tab" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="100%" stop-color="#e6e6e6"/>
-    </linearGradient>
-    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
-      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#000000" flood-opacity="0.16"/>
-    </filter>
-    <radialGradient id="led" cx="42%" cy="38%" r="65%">
-      <stop offset="0%"  stop-color="#dfeaffff"/>
-      <stop offset="45%" stop-color="#a9c7f2"/>
-      <stop offset="100%" stop-color="#6f9bd6"/>
-    </radialGradient>
-  </defs>
-
-  <!-- Tacche d'aggancio agli angoli (sotto il corpo) -->
-  <g fill="url(#tab)" stroke="#dcdcdc" stroke-width="1">
-    <rect x="32"  y="18"  width="30" height="36" rx="6"/>
-    <rect x="258" y="18"  width="30" height="36" rx="6"/>
-    <rect x="32"  y="586" width="30" height="36" rx="6"/>
-    <rect x="258" y="586" width="30" height="36" rx="6"/>
-  </g>
+  <!-- Stesso stile: tutto trasparente, solo contorni neri. -->
 
   <!-- Corpo del tasto -->
-  <g filter="url(#soft)">
-    <rect x="26" y="40" width="268" height="560" rx="20" ry="20"
-          fill="url(#key)" stroke="#e0e0e0" stroke-width="1.5"/>
-  </g>
+  <rect x="26" y="40" width="268" height="560" rx="20" ry="20"
+        fill="none" stroke="#000000" stroke-width="3"/>
 
-  <!-- Spia LED azzurra (in basso al centro) -->
-  <circle cx="161" cy="442" r="9" fill="url(#led)"/>
-  <circle cx="161" cy="442" r="9" fill="none" stroke="#cfd9ea" stroke-width="1"/>
-  <circle cx="157" cy="438" r="3" fill="#ffffff" opacity="0.85"/>
+  <!-- Spia LED (in basso al centro) -->
+  <circle cx="161" cy="442" r="9" fill="none" stroke="#000000" stroke-width="2"/>
 </svg>
