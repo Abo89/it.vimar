@@ -1,0 +1,58 @@
+<svg viewBox="0 0 330 615" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#f0f0f0"/>
+      <stop offset="12%"  stop-color="#ffffff"/>
+      <stop offset="50%"  stop-color="#ffffff"/>
+      <stop offset="88%"  stop-color="#fbfbfb"/>
+      <stop offset="100%" stop-color="#e7e7e7"/>
+    </linearGradient>
+    <linearGradient id="tab" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#e4e4e4"/>
+    </linearGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+    <radialGradient id="hole" cx="40%" cy="35%" r="70%">
+      <stop offset="0%"  stop-color="#555555"/>
+      <stop offset="55%" stop-color="#1c1c1c"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </radialGradient>
+  </defs>
+
+  <!-- ===== Ganci di fissaggio superiori ===== -->
+  <g fill="url(#tab)" stroke="#dcdcdc" stroke-width="1">
+    <rect x="78"  y="22" width="52" height="34" rx="6"/>
+    <rect x="200" y="22" width="52" height="34" rx="6"/>
+  </g>
+
+  <!-- ===== Ganci di fissaggio inferiori ===== -->
+  <g fill="url(#tab)" stroke="#dcdcdc" stroke-width="1">
+    <rect x="78"  y="559" width="52" height="34" rx="6"/>
+    <rect x="200" y="559" width="52" height="34" rx="6"/>
+  </g>
+
+  <!-- ===== Corpo del modulo ===== -->
+  <g filter="url(#soft)">
+    <rect x="38" y="40" width="254" height="535" rx="22" ry="22"
+          fill="url(#body)" stroke="#e0e0e0" stroke-width="1.5"/>
+  </g>
+
+  <!-- ===== Simbolo varistor / dimmer (in basso a sinistra) ===== -->
+  <g stroke="#6f6f6f" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- rettangolo -->
+    <rect x="62" y="478" width="44" height="34" rx="2"/>
+    <!-- freccia diagonale che attraversa il rettangolo -->
+    <line x1="52" y1="524" x2="112" y2="464"/>
+    <polyline points="98,464 112,464 112,478"/>
+  </g>
+
+  <!-- ===== Foro spia (LED) ===== -->
+  <circle cx="165" cy="497" r="16" fill="url(#hole)"/>
+  <circle cx="165" cy="497" r="16" fill="none" stroke="#cfcfcf" stroke-width="1.5"/>
+
+  <!-- ===== Pulsante ===== -->
+  <circle cx="232" cy="497" r="16" fill="#fdfdfd" stroke="#9a9a9a" stroke-width="2.5"/>
+  <circle cx="232" cy="497" r="6"  fill="#bdbdbd"/>
+</svg>
