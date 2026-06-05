@@ -1,37 +1,46 @@
 <svg viewBox="0 0 596 641" xmlns="http://www.w3.org/2000/svg">
-  <!-- Bianco e nero puro: solo #000 e #fff. Sfondo trasparente. -->
+  <!-- Stile bold: contorni neri su sfondo trasparente. Bordi strutturali irrobustiti; dettagli fitti mantenuti leggibili. -->
 
-  <!-- Tacche di aggancio (nere) -->
-  <rect x="44" y="29" width="22" height="23" rx="3" fill="#000000"/>
-  <rect x="112" y="29" width="39" height="23" rx="3" fill="#000000"/>
-  <rect x="178" y="29" width="39" height="23" rx="3" fill="#000000"/>
-  <rect x="262" y="29" width="21" height="23" rx="3" fill="#000000"/>
-  <rect x="312" y="29" width="22" height="23" rx="3" fill="#000000"/>
-  <rect x="380" y="29" width="39" height="23" rx="3" fill="#000000"/>
-  <rect x="444" y="29" width="39" height="23" rx="3" fill="#000000"/>
-  <rect x="530" y="29" width="21" height="23" rx="3" fill="#000000"/>
-  <rect x="44" y="588" width="22" height="24" rx="3" fill="#000000"/>
-  <rect x="112" y="588" width="39" height="24" rx="3" fill="#000000"/>
-  <rect x="178" y="588" width="39" height="24" rx="3" fill="#000000"/>
-  <rect x="262" y="588" width="21" height="24" rx="3" fill="#000000"/>
-  <rect x="312" y="588" width="22" height="24" rx="3" fill="#000000"/>
-  <rect x="380" y="588" width="39" height="24" rx="3" fill="#000000"/>
-  <rect x="444" y="588" width="39" height="24" rx="3" fill="#000000"/>
-  <rect x="530" y="588" width="21" height="24" rx="3" fill="#000000"/>
+  <!-- Regione esterna al corpo: le tacche restano visibili solo fuori dal corpo (effetto "dietro") -->
+  <defs>
+    <clipPath id="fuoriCorpo">
+      <path d="M0 0 H596 V641 H0 Z M30 50 H567 V590 H30 Z" clip-rule="evenodd"/>
+    </clipPath>
+  </defs>
+
+  <!-- Tacche di aggancio (nere, dietro al corpo) -->
+  <g clip-path="url(#fuoriCorpo)" fill="#000000">
+    <rect x="44" y="29" width="22" height="23" rx="3"/>
+    <rect x="112" y="29" width="39" height="23" rx="3"/>
+    <rect x="178" y="29" width="39" height="23" rx="3"/>
+    <rect x="262" y="29" width="21" height="23" rx="3"/>
+    <rect x="312" y="29" width="22" height="23" rx="3"/>
+    <rect x="380" y="29" width="39" height="23" rx="3"/>
+    <rect x="444" y="29" width="39" height="23" rx="3"/>
+    <rect x="530" y="29" width="21" height="23" rx="3"/>
+    <rect x="44" y="588" width="22" height="24" rx="3"/>
+    <rect x="112" y="588" width="39" height="24" rx="3"/>
+    <rect x="178" y="588" width="39" height="24" rx="3"/>
+    <rect x="262" y="588" width="21" height="24" rx="3"/>
+    <rect x="312" y="588" width="22" height="24" rx="3"/>
+    <rect x="380" y="588" width="39" height="24" rx="3"/>
+    <rect x="444" y="588" width="39" height="24" rx="3"/>
+    <rect x="530" y="588" width="21" height="24" rx="3"/>
+  </g>
   <!-- piccole tacche centrali -->
   <polygon points="290,29 304,29 297,40" fill="#000000"/>
   <polygon points="290,612 304,612 297,601" fill="#000000"/>
 
   <!-- Corpo -->
-  <rect x="30" y="50" width="537" height="540" rx="28" fill="none" stroke="#000000" stroke-width="3"/>
+  <rect x="30" y="50" width="537" height="540" rx="28" fill="none" stroke="#000000" stroke-width="6"/>
 
   <!-- Anello luminoso: bordi (banda bianca tra due cerchi) -->
-  <circle cx="297" cy="320" r="252" fill="none" stroke="#000000" stroke-width="3"/>
-  <circle cx="297" cy="320" r="206" fill="none" stroke="#000000" stroke-width="3"/>
+  <circle cx="297" cy="320" r="252" fill="none" stroke="#000000" stroke-width="6"/>
+  <circle cx="297" cy="320" r="206" fill="none" stroke="#000000" stroke-width="6"/>
 
-  <!-- Cornice del display -->
-  <circle cx="297" cy="320" r="174" fill="none" stroke="#000000" stroke-width="6"/>
-  <circle cx="297" cy="320" r="166" fill="none" stroke="#000000" stroke-width="1.5"/>
+  <!-- Cornice del display (capped per non chiudere la banda bianca) -->
+  <circle cx="297" cy="320" r="174" fill="none" stroke="#000000" stroke-width="10"/>
+  <circle cx="297" cy="320" r="166" fill="none" stroke="#000000" stroke-width="3"/>
 
   <!-- Cifre 20.3 (matrice di punti) -->
     <circle cx="208.0" cy="278.0" r="6.0" fill="#000000"/>
@@ -85,12 +94,12 @@
     <circle cx="386.0" cy="362.0" r="6.0" fill="#000000"/>
 
   <!-- ===== Simboli angoli ===== -->
-  <!-- Alto-sx: C/F con frecce di rotazione attorno alle lettere -->
+  <!-- Alto-sx: C/F con frecce di rotazione -->
   <g font-family="Arial, Helvetica, sans-serif" font-weight="700" fill="#000000">
     <text x="52" y="104" font-size="29">&#176;C</text>
     <text x="84" y="130" font-size="29">&#176;F</text>
   </g>
-  <g fill="none" stroke="#000000" stroke-width="3">
+  <g fill="none" stroke="#000000" stroke-width="5">
     <path d="M83 78 A26 26 0 0 1 109 92"/>
     <path d="M83 130 A26 26 0 0 1 57 104"/>
   </g>
@@ -98,33 +107,33 @@
   <polygon points="50,104 64,104 57,93" fill="#000000"/>
 
   <!-- Alto-dx: sole -->
-  <g>
-      <circle cx="499" cy="116" r="13" fill="none" stroke="#000000" stroke-width="3.5"/>
-      <line x1="518.0" y1="116.0" x2="526.0" y2="116.0" stroke="#000000" stroke-width="3.5" stroke-linecap="round"/>
-      <line x1="512.4" y1="129.4" x2="518.1" y2="135.1" stroke="#000000" stroke-width="3.5" stroke-linecap="round"/>
-      <line x1="499.0" y1="135.0" x2="499.0" y2="143.0" stroke="#000000" stroke-width="3.5" stroke-linecap="round"/>
-      <line x1="485.6" y1="129.4" x2="479.9" y2="135.1" stroke="#000000" stroke-width="3.5" stroke-linecap="round"/>
-      <line x1="480.0" y1="116.0" x2="472.0" y2="116.0" stroke="#000000" stroke-width="3.5" stroke-linecap="round"/>
-      <line x1="485.6" y1="102.6" x2="479.9" y2="96.9" stroke="#000000" stroke-width="3.5" stroke-linecap="round"/>
-      <line x1="499.0" y1="97.0" x2="499.0" y2="89.0" stroke="#000000" stroke-width="3.5" stroke-linecap="round"/>
-      <line x1="512.4" y1="102.6" x2="518.1" y2="96.9" stroke="#000000" stroke-width="3.5" stroke-linecap="round"/>
+  <g stroke="#000000" stroke-width="5" stroke-linecap="round">
+      <circle cx="499" cy="116" r="13" fill="none"/>
+      <line x1="518.0" y1="116.0" x2="526.0" y2="116.0"/>
+      <line x1="512.4" y1="129.4" x2="518.1" y2="135.1"/>
+      <line x1="499.0" y1="135.0" x2="499.0" y2="143.0"/>
+      <line x1="485.6" y1="129.4" x2="479.9" y2="135.1"/>
+      <line x1="480.0" y1="116.0" x2="472.0" y2="116.0"/>
+      <line x1="485.6" y1="102.6" x2="479.9" y2="96.9"/>
+      <line x1="499.0" y1="97.0" x2="499.0" y2="89.0"/>
+      <line x1="512.4" y1="102.6" x2="518.1" y2="96.9"/>
   </g>
 
   <!-- Basso-sx: standby/power -->
-  <path d="M91 522 a18 18 0 1 0 26 0" fill="none" stroke="#000000" stroke-width="3.5"/>
-  <line x1="104" y1="500" x2="104" y2="522" stroke="#000000" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M91 522 a18 18 0 1 0 26 0" fill="none" stroke="#000000" stroke-width="5"/>
+  <line x1="104" y1="500" x2="104" y2="522" stroke="#000000" stroke-width="5" stroke-linecap="round"/>
 
   <!-- Basso-dx: sole ridotto (con linea) -->
-  <g>
-      <circle cx="495" cy="516" r="11" fill="none" stroke="#000000" stroke-width="3"/>
-      <line x1="511.0" y1="516.0" x2="518.0" y2="516.0" stroke="#000000" stroke-width="3" stroke-linecap="round"/>
-      <line x1="506.3" y1="527.3" x2="511.3" y2="532.3" stroke="#000000" stroke-width="3" stroke-linecap="round"/>
-      <line x1="495.0" y1="532.0" x2="495.0" y2="539.0" stroke="#000000" stroke-width="3" stroke-linecap="round"/>
-      <line x1="483.7" y1="527.3" x2="478.7" y2="532.3" stroke="#000000" stroke-width="3" stroke-linecap="round"/>
-      <line x1="479.0" y1="516.0" x2="472.0" y2="516.0" stroke="#000000" stroke-width="3" stroke-linecap="round"/>
-      <line x1="483.7" y1="504.7" x2="478.7" y2="499.7" stroke="#000000" stroke-width="3" stroke-linecap="round"/>
-      <line x1="495.0" y1="500.0" x2="495.0" y2="493.0" stroke="#000000" stroke-width="3" stroke-linecap="round"/>
-      <line x1="506.3" y1="504.7" x2="511.3" y2="499.7" stroke="#000000" stroke-width="3" stroke-linecap="round"/>
+  <g stroke="#000000" stroke-width="4.5" stroke-linecap="round">
+      <circle cx="495" cy="516" r="11" fill="none"/>
+      <line x1="511.0" y1="516.0" x2="518.0" y2="516.0"/>
+      <line x1="506.3" y1="527.3" x2="511.3" y2="532.3"/>
+      <line x1="495.0" y1="532.0" x2="495.0" y2="539.0"/>
+      <line x1="483.7" y1="527.3" x2="478.7" y2="532.3"/>
+      <line x1="479.0" y1="516.0" x2="472.0" y2="516.0"/>
+      <line x1="483.7" y1="504.7" x2="478.7" y2="499.7"/>
+      <line x1="495.0" y1="500.0" x2="495.0" y2="493.0"/>
+      <line x1="506.3" y1="504.7" x2="511.3" y2="499.7"/>
   </g>
-  <line x1="468" y1="540" x2="522" y2="540" stroke="#000000" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="468" y1="540" x2="522" y2="540" stroke="#000000" stroke-width="5" stroke-linecap="round"/>
 </svg>

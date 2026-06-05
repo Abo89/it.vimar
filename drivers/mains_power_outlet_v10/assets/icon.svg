@@ -1,34 +1,36 @@
 <svg viewBox="0 0 330 615" xmlns="http://www.w3.org/2000/svg">
+  <!-- Stesso stile: contorni neri su sfondo trasparente. Spessori raddoppiati (proporzioni invariate). -->
 
-  <!-- ===== Ganci di fissaggio superiori ===== -->
-  <g fill="#000000" stroke="#000000" stroke-width="1.5">
-    <rect x="78"  y="22" width="52" height="34" rx="6"/>
-    <rect x="200" y="22" width="52" height="34" rx="6"/>
-  </g>
+  <!-- Regione esterna al corpo: i ganci restano visibili solo fuori dal corpo (effetto "dietro") -->
+  <defs>
+    <clipPath id="fuoriCorpo">
+      <path d="M0 0 H330 V615 H0 Z M38 40 H292 V575 H38 Z" clip-rule="evenodd"/>
+    </clipPath>
+  </defs>
 
-  <!-- ===== Ganci di fissaggio inferiori ===== -->
-  <g fill="#000000" stroke="#000000" stroke-width="1.5">
+  <!-- ===== Ganci di fissaggio (dietro al corpo, chiusi dal bordo) ===== -->
+  <g clip-path="url(#fuoriCorpo)" fill="#000000" stroke="#000000" stroke-width="3">
+    <rect x="78"  y="22"  width="52" height="34" rx="6"/>
+    <rect x="200" y="22"  width="52" height="34" rx="6"/>
     <rect x="78"  y="559" width="52" height="34" rx="6"/>
     <rect x="200" y="559" width="52" height="34" rx="6"/>
   </g>
 
   <!-- ===== Corpo del modulo ===== -->
   <rect x="38" y="40" width="254" height="535" rx="22" ry="22"
-        fill="none" stroke="#000000" stroke-width="2"/>
+        fill="none" stroke="#000000" stroke-width="4"/>
 
-  <!-- ===== Simbolo varistor / dimmer (in basso a sinistra) ===== -->
-  <g stroke="#000000" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <!-- rettangolo -->
+  <!-- ===== Simbolo varistor / dimmer ===== -->
+  <g stroke="#000000" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round">
     <rect x="62" y="478" width="44" height="34" rx="2"/>
-    <!-- freccia diagonale che attraversa il rettangolo -->
     <line x1="52" y1="524" x2="112" y2="464"/>
     <polyline points="98,464 112,464 112,478"/>
   </g>
 
   <!-- ===== Foro spia (LED) ===== -->
-  <circle cx="165" cy="497" r="16" fill="none" stroke="#000000" stroke-width="1.5"/>
+  <circle cx="165" cy="497" r="16" fill="none" stroke="#000000" stroke-width="3"/>
 
   <!-- ===== Pulsante ===== -->
-  <circle cx="232" cy="497" r="16" fill="none" stroke="#000000" stroke-width="2.5"/>
+  <circle cx="232" cy="497" r="16" fill="none" stroke="#000000" stroke-width="5"/>
   <circle cx="232" cy="497" r="6"  fill="#000000"/>
 </svg>
