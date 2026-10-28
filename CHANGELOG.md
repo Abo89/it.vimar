@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.4.9 - 2026-10-28
+- window_cov_v10: add tilt capability to blinds paired before v1.4.3 and configure tilt reporting; round tilt commands and ignore invalid tilt reports
+- window_cov_v10: Open/Close flow cards now update the blind state and have Italian titles
+- wheelthermostat_v10: thermostat modes limited to off/heat (heating-only device); ignore invalid temperature readings
+- mains_power_outlet_v10: correct fallback power scaling (x10); device class set to socket
+- Dimmer, switches and outlet: configure attribute reporting so external changes show up immediately
+- Outlet polling 10 s -> 60 s, thermostat polling 30 s -> 5 min
+- Remove leftover template pairing code; Zigbee drivers use Homey's built-in Zigbee pairing
+
 ## v1.3.18 - 2026-06-02
 - Replace all driver images with new PNG assets (1000x1000, 500x500, 75x75)
 - Update Vimar logo images

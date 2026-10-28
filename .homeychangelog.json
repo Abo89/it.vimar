@@ -16,5 +16,9 @@
   },
   "1.4.8": {
     "en": "update svg"
+  },
+  "1.4.9": {
+    "en": "Fixes for blinds tilt, thermostat modes, outlet power reading; faster status updates with less polling",
+    "it": "Correzioni per inclinazione tapparelle, modalità termostato, lettura potenza presa; aggiornamenti di stato più rapidi con meno polling"
   }
 }
