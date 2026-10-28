@@ -609,6 +609,7 @@
         "id": "move_open",
         "title": {
           "en": "Open",
+          "it": "Apri",
           "de": "Öffnen"
         },
         "args": [
@@ -623,6 +624,7 @@
         "id": "move_close",
         "title": {
           "en": "Close",
+          "it": "Chiudi",
           "de": "Schließen"
         },
         "args": [

@@ -34,17 +34,28 @@ class WindowCovV10Device extends ZigBeeDevice {
 
         // Tilt position (venetian blind slats). The device reports tiltBlindLiftAndTilt
         // and accepts goToTiltPercentage, so expose the tilt capability as well.
-        if (this.hasCapability('windowcoverings_tilt_set')) {
-            this.registerCapability('windowcoverings_tilt_set', CLUSTER.WINDOW_COVERING, {
-                reportOpts: {
-                    configureAttributeReporting: {
-                        minInterval: 0,
-                        maxInterval: 3600,
-                        minChange: 1,
-                    },
-                },
-            });
+        // Devices paired before v1.4.3 don't have it yet: add it on the fly.
+        if (!this.hasCapability('windowcoverings_tilt_set')) {
+            await this.addCapability('windowcoverings_tilt_set').catch(this.error);
         }
+        this.registerCapability('windowcoverings_tilt_set', CLUSTER.WINDOW_COVERING, {
+            // The system parsers neither round the outgoing value (uint8 on the wire)
+            // nor reject out-of-range reports (e.g. 255 = position unknown).
+            setParser: value => ({
+                percentageTiltValue: Math.round(value * 100),
+            }),
+            reportParser: value => {
+                if (value < 0 || value > 100) return null;
+                return value / 100;
+            },
+            reportOpts: {
+                configureAttributeReporting: {
+                    minInterval: 0,
+                    maxInterval: 3600,
+                    minChange: 1,
+                },
+            },
+        });
 
         // Up / Idle / Down buttons. The system handler simply sends
         // upOpen / stop / downClose; no attribute reporting is involved.
