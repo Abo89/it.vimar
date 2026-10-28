@@ -104,7 +104,7 @@
         "en": "Mains_Power_Outlet_v1.0",
         "it": "Mains_Power_Outlet_v1.0"
       },
-      "class": "button",
+      "class": "socket",
       "capabilities": [
         "onoff",
         "measure_power"
@@ -381,13 +381,6 @@
               "title": {
                 "en": "Heat",
                 "it": "Riscaldamento"
-              }
-            },
-            {
-              "id": "auto",
-              "title": {
-                "en": "Auto",
-                "it": "Automatico"
               }
             }
           ]

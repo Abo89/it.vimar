@@ -9,16 +9,21 @@ const THERMOSTAT_EP = 10;
 // mirroring the pattern used by the other Vimar drivers in this app.
 const POLL_INTERVAL = 30000; // 30 s
 
+// ZCL "unknown/invalid" value for localTemperature (int16 0x8000).
+const INVALID_TEMPERATURE = -32768;
+
 // zigbee-clusters systemMode enum keys → Homey thermostat_mode values.
 // Note the camelCase keys (`emergencyHeating`, `fanOnly`) – these are the
 // exact strings emitted by the cluster's enum8 parser.
+// The device is heating-only (controlSequenceOfOperation "heating") and the
+// manifest only allows "off" / "heat", so every mode maps to one of those.
 const ZIGBEE_MODE_TO_HOMEY = {
   off:              'off',
-  auto:             'auto',
-  cool:             'cool',
+  auto:             'heat',
   heat:             'heat',
   emergencyHeating: 'heat',
-  precooling:       'cool',
+  cool:             'off',
+  precooling:       'off',
   fanOnly:          'off',
   dry:              'off',
   sleep:            'off',
@@ -27,8 +32,6 @@ const ZIGBEE_MODE_TO_HOMEY = {
 const HOMEY_MODE_TO_ZIGBEE = {
   off:  'off',
   heat: 'heat',
-  cool: 'cool',
-  auto: 'auto',
 };
 
 class WheelThermostatDevice extends ZigBeeDevice {
@@ -95,7 +98,7 @@ class WheelThermostatDevice extends ZigBeeDevice {
   }
 
   _setMeasuredTemperature(value) {
-    if (value === null || value === undefined) return;
+    if (value === null || value === undefined || value === INVALID_TEMPERATURE) return;
     const temp = parseFloat((value * TEMP_FACTOR).toFixed(2));
     this.setCapabilityValue('measure_temperature', temp).catch(this.error);
   }
