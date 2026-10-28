@@ -48,6 +48,20 @@ class VimarOnOffSwitchModule extends ZigBeeDevice {
     });
 
     zclNode.endpoints[ENDPOINT].bind('onOff', new OnOffBoundCluster(this));
+
+    // Configured explicitly (not via reportOpts, which only runs on the first init
+    // after pairing) so that devices paired before this change get it too.
+    if (!this.getStoreValue('reportingConfigured')) {
+      this.configureAttributeReporting([{
+        endpointId: ENDPOINT,
+        cluster: CLUSTER.ON_OFF,
+        attributeName: 'onOff',
+        minInterval: 0,
+        maxInterval: 300,
+      }])
+        .then(() => this.setStoreValue('reportingConfigured', true))
+        .catch(err => this.error('configureAttributeReporting failed', err));
+    }
   }
 
   onDeleted() {

@@ -48,14 +48,22 @@ class WindowCovV10Device extends ZigBeeDevice {
                 if (value < 0 || value > 100) return null;
                 return value / 100;
             },
-            reportOpts: {
-                configureAttributeReporting: {
-                    minInterval: 0,
-                    maxInterval: 3600,
-                    minChange: 1,
-                },
-            },
         });
+
+        // Tilt reporting is configured explicitly (not via reportOpts, which only runs on
+        // the first init after pairing) so that devices paired before v1.4.3 get it too.
+        if (!this.getStoreValue('tiltReportingConfigured')) {
+            this.configureAttributeReporting([{
+                endpointId: this.getClusterEndpoint(CLUSTER.WINDOW_COVERING),
+                cluster: CLUSTER.WINDOW_COVERING,
+                attributeName: 'currentPositionTiltPercentage',
+                minInterval: 0,
+                maxInterval: 3600,
+                minChange: 1,
+            }])
+                .then(() => this.setStoreValue('tiltReportingConfigured', true))
+                .catch(err => this.error('configureAttributeReporting (tilt) failed', err));
+        }
 
         // Up / Idle / Down buttons. The system handler simply sends
         // upOpen / stop / downClose; no attribute reporting is involved.

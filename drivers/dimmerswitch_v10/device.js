@@ -76,6 +76,30 @@ class VimarDimmerSwitch extends ZigBeeDevice {
 
     zclNode.endpoints[ENDPOINT_BUTTON].bind('onOff', new OnOffBoundCluster(this));
     zclNode.endpoints[ENDPOINT_BUTTON].bind('levelControl', new LevelControlBoundCluster(this));
+
+    // Configured explicitly (not via reportOpts, which only runs on the first init
+    // after pairing) so that devices paired before this change get it too.
+    if (!this.getStoreValue('reportingConfigured')) {
+      this.configureAttributeReporting([
+        {
+          endpointId: ENDPOINT_LOAD,
+          cluster: CLUSTER.ON_OFF,
+          attributeName: 'onOff',
+          minInterval: 0,
+          maxInterval: 300,
+        },
+        {
+          endpointId: ENDPOINT_LOAD,
+          cluster: CLUSTER.LEVEL_CONTROL,
+          attributeName: 'currentLevel',
+          minInterval: 1,
+          maxInterval: 300,
+          minChange: 5,
+        },
+      ])
+        .then(() => this.setStoreValue('reportingConfigured', true))
+        .catch(err => this.error('configureAttributeReporting failed', err));
+    }
   }
 
   onDeleted() {

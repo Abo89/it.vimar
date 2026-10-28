@@ -5,9 +5,9 @@ const { ZigBeeDevice } = require('homey-zigbeedriver');
 // The thermostat cluster reports temperatures/setpoints in 0.01 °C units (int16).
 const TEMP_FACTOR   = 0.01;
 const THERMOSTAT_EP = 10;
-// Fallback poll: the device does not always emit attribute reports reliably,
-// mirroring the pattern used by the other Vimar drivers in this app.
-const POLL_INTERVAL = 30000; // 30 s
+// Slow fallback poll in case an attribute report is missed; regular updates
+// arrive through the reporting configured in onNodeInit.
+const POLL_INTERVAL = 300000; // 5 min
 
 // ZCL "unknown/invalid" value for localTemperature (int16 0x8000).
 const INVALID_TEMPERATURE = -32768;

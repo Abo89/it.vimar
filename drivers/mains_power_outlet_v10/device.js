@@ -45,9 +45,34 @@ class MainsPowerOutlet extends ZigBeeDevice {
       },
       getOpts: {
         getOnStart: true,
-        pollInterval: 10000,
+        // Slow fallback only: changes arrive through attribute reporting below.
+        pollInterval: 60000,
       },
     });
+
+    // Configured explicitly (not via reportOpts, which only runs on the first init
+    // after pairing) so that devices paired before this change get it too.
+    if (electricalMeasurementEndpoint !== null && !this.getStoreValue('reportingConfigured')) {
+      this.configureAttributeReporting([
+        {
+          endpointId: electricalMeasurementEndpoint,
+          cluster: CLUSTER.ON_OFF,
+          attributeName: 'onOff',
+          minInterval: 0,
+          maxInterval: 300,
+        },
+        {
+          endpointId: electricalMeasurementEndpoint,
+          cluster: CLUSTER.ELECTRICAL_MEASUREMENT,
+          attributeName: 'activePower',
+          minInterval: 5,
+          maxInterval: 300,
+          minChange: 1,
+        },
+      ])
+        .then(() => this.setStoreValue('reportingConfigured', true))
+        .catch(err => this.error('configureAttributeReporting failed', err));
+    }
   }
 
   onDeleted() {
